@@ -1,0 +1,55 @@
+name: EON Fleet Pipeline
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # every 10 minutes, 24/7 on GitHub's cloud
+  workflow_dispatch:          # manual trigger
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fleet-pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go (for cf-temp-account minting)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          pip install requests
+          go install github.com/PeronGH/cf-temp-account@latest 2>/dev/null || echo "go install note"
+
+      - name: Run fleet cloud pipeline
+        env:
+          EON_TG_BOT: ${{ secrets.EON_TG_BOT }}
+          EON_TG_CHAT: ${{ secrets.EON_TG_CHAT }}
+          EON_TG_CHANNEL: ${{ secrets.EON_TG_CHANNEL }}
+          EON_DASHBOARD_URL: ${{ secrets.EON_DASHBOARD_URL }}
+          EON_DASHBOARD_SECRET: ${{ secrets.EON_DASHBOARD_SECRET }}
+          EON_CF_TOKEN: ${{ secrets.EON_CF_TOKEN }}
+          EON_CF_ACCOUNT: ${{ secrets.EON_CF_ACCOUNT }}
+        run: |
+          # Health-check the fleet + push registry to dashboard + Telegram
+          python3 scripts/fleet-cloud.py 2>&1 | tail -40 || echo "fleet-cloud exit $?"
+
+      - name: Commit updated registry
+        run: |
+          git config user.name "eon-fleet-bot"
+          git config user.email "eon-fleet-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "fleet registry update $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push origin main 2>&1 | tail -3 || echo "push note"

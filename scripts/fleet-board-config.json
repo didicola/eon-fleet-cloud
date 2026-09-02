@@ -1,0 +1,11 @@
+{
+    "dashboard_url": "https://ghost.eon-sovereign.workers.dev",
+    "dashboard_secret": "ghost-dash-1788300637",
+    "dashboard_account": "87f71cf268d9b69fdfd2725afbfb4483",
+    "dashboard_script": "ghost",
+    "dashboard_kv": "94ea9d1507854fe99a664b60f4c6b40f",
+    "telegram_bot": "8814216816:AAHF2da0Ck0y8phnotragkk6Y0sjlCVFC5Q",
+    "telegram_chat": "6663994526",
+    "telegram_channel": "@eon_fleet",
+    "note": "Ghost Dashboard = own ghost.eon URL (ghost.eon-sovereign.workers.dev) \u2014 permanent 24/7 live dashboard + chat on stable account. Memory-first storage: in-memory (isolate-warm) + KV persist. Round manager pushes registry to /update every cycle; answers queued chats via local gateway :8093. telegram_channel=@eon_fleet (created 2026-09-01 via MTProto; bot admin; verified)."
+}
