@@ -115,6 +115,7 @@ def main():
         if lane:
             rounds.append({
                 'name': f'ghost-{aid[:8]}',
+                'label': f'ghost-{aid[:8]}',
                 'url': lane,
                 'aid': aid,
                 'claim_status': 'unclaimed',

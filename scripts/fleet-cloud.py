@@ -74,9 +74,15 @@ def main():
     dash = os.environ.get('EON_DASHBOARD_URL', '')
     secret = os.environ.get('EON_DASHBOARD_SECRET', '')
     if dash and secret:
+        # ensure each round has url + label (dashboard requirement)
+        clean = []
+        for r in rounds:
+            if not r.get('url'): continue
+            r['label'] = r.get('label') or r.get('name') or f"ghost-{r.get('aid','?')[:8]}"
+            clean.append(r)
         sep = '&' if '?' in dash else '?'
         code, body = http('POST', dash.rstrip('/') + '/update' + sep + 'token=' + secret,
-                          data={'rounds': rounds},
+                          data={'rounds': clean},
                           timeout=20)
         print(f"[dash] push -> {code} {body[:80]}")
 
