@@ -47,32 +47,36 @@ def main():
     rounds = reg.get('rounds', [])
     print(f"[fleet] {len(rounds)} rounds in registry")
 
-    # Health-check each round
+    # Health-check each round (try /api/status then /health)
     live = 0
     for r in rounds:
         url = r.get('url', '')
         if not url: continue
-        try:
-            code, body = http('GET', url.rstrip('/') + '/health', timeout=10)
-            ok = code == 200
-            if ok: live += 1
-            r['status'] = 'live' if ok else f'dead({code})'
-            r['last_check'] = now()
-            print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> {code}")
-        except Exception as e:
-            r['status'] = f'err:{str(e)[:30]}'
-            print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> err")
+        ok = False
+        for ep in ('/api/status', '/health', '/'):
+            try:
+                code, body = http('GET', url.rstrip('/') + ep, timeout=10)
+                if code == 200 and body.strip():
+                    ok = True
+                    break
+            except Exception:
+                continue
+        if ok: live += 1
+        r['status'] = 'live' if ok else 'dead'
+        r['last_check'] = now()
+        print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> {'live' if ok else 'dead'}")
     reg['live'] = live
     reg['updated'] = now()
     save_reg(reg)
     print(f"[fleet] live={live}/{len(rounds)}")
 
-    # Push to dashboard (permanent URL)
+    # Push to dashboard (permanent URL) — auth via ?token= query param
     dash = os.environ.get('EON_DASHBOARD_URL', '')
     secret = os.environ.get('EON_DASHBOARD_SECRET', '')
     if dash and secret:
-        code, body = http('POST', dash.rstrip('/') + '/update',
-                          data={'secret': secret, 'rounds': rounds},
+        sep = '&' if '?' in dash else '?'
+        code, body = http('POST', dash.rstrip('/') + '/update' + sep + 'token=' + secret,
+                          data={'rounds': rounds},
                           timeout=20)
         print(f"[dash] push -> {code} {body[:80]}")
 
