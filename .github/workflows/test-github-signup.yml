@@ -1,0 +1,21 @@
+name: Test GitHub Signup Reachability
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check GitHub signup reachability from runner
+        run: |
+          echo "=== runner IP ==="
+          curl -s https://api.ipify.org
+          echo
+          echo "=== github.com/signup status ==="
+          curl -s -o /dev/null -w "code=%{http_code}\n" -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36" https://github.com/signup
+          echo "=== github.com/join status ==="
+          curl -s -o /dev/null -w "code=%{http_code}\n" -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36" https://github.com/join
+          echo "=== github.com root ==="
+          curl -s -o /dev/null -w "code=%{http_code}\n" https://github.com
+          echo "=== signup page first 300 chars ==="
+          curl -s -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36" https://github.com/signup | head -c 300
