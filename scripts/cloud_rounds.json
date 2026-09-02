@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-02T13:08:04Z",
+  "updated": "2026-09-02T13:14:40Z",
   "rounds": [
     {
       "aid": "802253dbdf7aa9d4106d14bb7d6d205c",
@@ -11,8 +11,8 @@
       "health": "dead",
       "version": "v6",
       "note": "token expired \u2192 subdomain TLS fail; worker+KV permanent but unreachable",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:32Z",
+      "status": "dead"
     },
     {
       "aid": "64034f9ecfb82b9d53c8cd140a8ae560",
@@ -24,8 +24,8 @@
       "health": "dead",
       "version": "v2-cloud",
       "note": "claimed account; v2-cloud (no streaming); cannot update (no post-claim token)",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:32Z",
+      "status": "dead"
     },
     {
       "aid": "3b5e2eaa9caa0b85b928891586a8c6df",
@@ -37,8 +37,8 @@
       "health": "dead",
       "version": "v2-cloud",
       "note": "claimed account; v2-cloud; brain verified VANILLA-ALIVE",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:32Z",
+      "status": "dead"
     },
     {
       "aid": "fd17f77405ef314feed59ddae29c6870",
@@ -50,8 +50,8 @@
       "health": "dead",
       "version": "v6",
       "note": "PRIMARY \u2014 v6 (streaming + /v1/models + KV self-heal); opencode cloud provider",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:33Z",
+      "status": "dead"
     },
     {
       "aid": "3c2236dc942cf620666de2f7f6d65d0f",
@@ -63,8 +63,8 @@
       "health": "dead",
       "version": "lane",
       "note": "claim timeout; verify fail; token expired",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:33Z",
+      "status": "dead"
     },
     {
       "aid": "6b8cf3c379beb3d91926fc05330b56e1",
@@ -76,8 +76,8 @@
       "health": "dead",
       "version": "v6",
       "note": "matrix #2 \u2014 bypass 1-hour life",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:33Z",
+      "status": "dead"
     },
     {
       "aid": "643c35aa3aa33896d077b31e342ffea4",
@@ -89,8 +89,8 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:33Z",
+      "status": "dead"
     },
     {
       "aid": "dc8cc113b388f3407931fe9157de0324",
@@ -102,8 +102,8 @@
       "health": "dead",
       "version": "twins-v1",
       "note": "OPTION B \u2014 0-local service twins (router/anthropic/telegram/iptv)",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:33Z",
+      "status": "dead"
     },
     {
       "aid": "a2d365becb31364c4ab5dda121cded2b",
@@ -115,8 +115,8 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:33Z",
+      "status": "dead"
     },
     {
       "aid": "e3ae208d3cefa591023695177610b778",
@@ -128,8 +128,8 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "736d6a67d039f9dfda233681598abe34",
@@ -142,8 +142,8 @@
       "version": "fleet-board-1.0",
       "role": "fleet-directory",
       "note": "Fleet Board \u2014 permanent live dashboard + directory (deploy-before-claim)",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "736d6a67d039f9dfda233681598abe34",
@@ -156,8 +156,8 @@
       "version": "aether-1.0",
       "role": "clean-twin",
       "note": "Aether \u2014 clean controlled twin (neutral identity, token-gated control)",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "ce5f51f41764d9527708b3317e45c9ad",
@@ -169,8 +169,8 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "8658ced6e33e535bbb6f2d69a8b01797",
@@ -183,8 +183,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.celestial-channel-865.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "a045da5c213775c5ee2467285fd60440",
@@ -197,8 +197,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.orange-walleye.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "41ffa2088b38ae73bb4ab0bf96c5bdd3",
@@ -211,8 +211,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.friendly-ant.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:03Z",
-      "status": "dead(0)"
+      "last_check": "2026-09-02T13:14:34Z",
+      "status": "dead"
     },
     {
       "aid": "5b51bc892889cee3f9aa14d9b01c7606",
@@ -225,8 +225,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.quartz-horesradish.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:35Z",
+      "status": "dead"
     },
     {
       "aid": "3cc6e6fd5952aa4658e11b7689a93dae",
@@ -239,8 +239,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.billowy-widget.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:35Z",
+      "status": "dead"
     },
     {
       "aid": "9e8ea15a488f67431a5815e259cd30f3",
@@ -253,8 +253,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.boulder-havarti.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:35Z",
+      "status": "dead"
     },
     {
       "aid": "17d2bbbbc0948a3ef56927b00e13519e",
@@ -267,8 +267,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.impossible-cashew.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:35Z",
+      "status": "dead"
     },
     {
       "aid": "8fdb80cdb8191e6abcde09f79cd69955",
@@ -281,8 +281,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.pewter-backpack.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:35Z",
+      "status": "dead"
     },
     {
       "aid": "f53318f924b61e013959b09e57e4430b",
@@ -295,8 +295,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.horn-flute.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:36Z",
+      "status": "dead"
     },
     {
       "aid": "151037b2b7385d2080279b612f0a0d09",
@@ -309,8 +309,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.bright-substance-151.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:36Z",
+      "status": "dead"
     },
     {
       "aid": "2de0542539efff14db8e26287aa256e8",
@@ -323,8 +323,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.bloom-guest.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:36Z",
+      "status": "dead"
     },
     {
       "aid": "991072f64b966bbe6485012418b61a1b",
@@ -337,8 +337,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.stitch-session.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:36Z",
+      "status": "dead"
     },
     {
       "aid": "5002fb980ba47370b712bc08a4b3e470",
@@ -351,8 +351,8 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.organized-watercress.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:37Z",
+      "status": "dead"
     },
     {
       "aid": "5002fb980ba47370b712bc08a4b3e470",
@@ -365,8 +365,8 @@
       "version": "v6",
       "ai_proxy": "00:13:56 FATAL: PUT failed:",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:37Z",
+      "status": "dead"
     },
     {
       "aid": "5002fb980ba47370b712bc08a4b3e470",
@@ -379,8 +379,8 @@
       "version": "v6",
       "ai_proxy": "00:13:57 FATAL: PUT failed:",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:37Z",
+      "status": "dead"
     },
     {
       "aid": "5002fb980ba47370b712bc08a4b3e470",
@@ -393,8 +393,8 @@
       "version": "v6",
       "ai_proxy": "00:13:57 FATAL: PUT failed:",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:37Z",
+      "status": "dead"
     },
     {
       "aid": "e2bc940fcdc2028ede3c18457442337d",
@@ -407,8 +407,8 @@
       "version": "v6",
       "ai_proxy": "12:45:33 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:37Z",
+      "status": "dead"
     },
     {
       "aid": "94186b33bbd5e1aad6b357306cd6a9a1",
@@ -421,8 +421,8 @@
       "version": "v6",
       "ai_proxy": "12:46:08 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:38Z",
+      "status": "dead"
     },
     {
       "aid": "49b19993d3b655cf488ac738d9d924bb",
@@ -435,8 +435,8 @@
       "version": "v6",
       "ai_proxy": "12:46:44 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:38Z",
+      "status": "dead"
     },
     {
       "aid": "8734abd60a4c7100320691ecfd3da393",
@@ -449,8 +449,8 @@
       "version": "v6",
       "ai_proxy": "12:47:18 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:38Z",
+      "status": "dead"
     },
     {
       "aid": "02ad9ab4e33fb13ea099112d314cb443",
@@ -463,8 +463,8 @@
       "version": "v6",
       "ai_proxy": "12:53:56 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:38Z",
+      "status": "dead"
     },
     {
       "aid": "b62b3cdd2e33e3fb37861baf97426bde",
@@ -477,8 +477,8 @@
       "version": "v6",
       "ai_proxy": "12:54:32 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:39Z",
+      "status": "dead"
     },
     {
       "aid": "b35e5099ee2028c9950600165e21d73e",
@@ -491,8 +491,8 @@
       "version": "v6",
       "ai_proxy": "12:55:10 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:39Z",
+      "status": "dead"
     },
     {
       "aid": "15632a1ae18505dee1c0a0e27cdeb1f8",
@@ -505,8 +505,8 @@
       "version": "v6",
       "ai_proxy": "12:55:45 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-09-02T13:08:04Z",
-      "status": "dead(403)"
+      "last_check": "2026-09-02T13:14:39Z",
+      "status": "dead"
     },
     {
       "aid": "bd457a4430fbfc399d4ead54e212ec6b",
@@ -519,8 +519,8 @@
       "version": "v6",
       "ai_proxy": "13:04:00 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "status": "dead(403)",
-      "last_check": "2026-09-02T13:08:04Z"
+      "status": "dead",
+      "last_check": "2026-09-02T13:14:39Z"
     },
     {
       "aid": "0cf6f878e75f1a707a84fc74399184f6",
@@ -533,8 +533,8 @@
       "version": "v6",
       "ai_proxy": "13:04:48 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "status": "dead(403)",
-      "last_check": "2026-09-02T13:08:04Z"
+      "status": "dead",
+      "last_check": "2026-09-02T13:14:39Z"
     },
     {
       "aid": "c856e6b056c01b03471977312a7588a2",
@@ -547,8 +547,8 @@
       "version": "v6",
       "ai_proxy": "13:05:26 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "status": "dead(403)",
-      "last_check": "2026-09-02T13:08:04Z"
+      "status": "dead",
+      "last_check": "2026-09-02T13:14:40Z"
     },
     {
       "aid": "9f88901b6e4d7cb0d859be9f3d183256",
@@ -561,8 +561,8 @@
       "version": "v6",
       "ai_proxy": "13:06:03 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "status": "dead(403)",
-      "last_check": "2026-09-02T13:08:04Z"
+      "status": "dead",
+      "last_check": "2026-09-02T13:14:40Z"
     }
   ],
   "live": 0
