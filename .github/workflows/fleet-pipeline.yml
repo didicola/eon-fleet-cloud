@@ -32,6 +32,11 @@ jobs:
         run: |
           pip install requests
           go install github.com/PeronGH/cf-temp-account@latest 2>/dev/null || echo "go install note"
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Mint + deploy fresh workers
+        run: |
+          python3 scripts/fleet-mint.py 2>&1 | tail -30 || echo "mint exit $?"
 
       - name: Run fleet cloud pipeline
         env:
