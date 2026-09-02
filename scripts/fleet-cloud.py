@@ -47,16 +47,16 @@ def main():
     rounds = reg.get('rounds', [])
     print(f"[fleet] {len(rounds)} rounds in registry")
 
-    # Health-check each round (try /api/status then /health)
+    # Health-check each round (try /status, /api/status, /health, then /)
     live = 0
     for r in rounds:
         url = r.get('url', '')
         if not url: continue
         ok = False
-        for ep in ('/api/status', '/health', '/'):
+        for ep in ('/status', '/api/status', '/health', '/'):
             try:
                 code, body = http('GET', url.rstrip('/') + ep, timeout=10)
-                if code == 200 and body.strip():
+                if code == 200 and body.strip() and 'not found' not in body:
                     ok = True
                     break
             except Exception:

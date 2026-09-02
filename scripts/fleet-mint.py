@@ -122,6 +122,7 @@ def main():
                 'status': 'live',
             })
             # persist token for later claim
+            pathlib.Path('state').mkdir(exist_ok=True)
             pathlib.Path(f'state/{aid}.mint.json').write_text(json.dumps(m))
             print(f"[mint] registered {lane}")
         time.sleep(2)
