@@ -12,6 +12,12 @@ on:
 permissions:
   contents: write
 
+# Serialize runs: overlapping runs push-race and silently drop the registry
+# (no registry commit has landed since Sep 2). Queue instead of overlap.
+concurrency:
+  group: fleet-pipeline
+  cancel-in-progress: false
+
 jobs:
   fleet-pipeline:
     runs-on: ubuntu-latest
