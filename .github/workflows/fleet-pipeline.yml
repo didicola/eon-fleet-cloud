@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '*/10 * * * *'   # every 10 minutes, 24/7 on GitHub's cloud
   workflow_dispatch:          # manual trigger
+  repository_dispatch:        # on-demand mint from twin/phone (type: fleet-mint-now)
+    types: [fleet-mint-now]
   push:
     branches: [main]
 
@@ -13,7 +15,7 @@ permissions:
 jobs:
   fleet-pipeline:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,6 +41,14 @@ jobs:
           EON_TARGET: "3"
         run: |
           python3 scripts/fleet-mint.py 2>&1 | tail -30 || echo "mint exit $?"
+
+      - name: Claim fresh mints (best-effort, headless)
+        # Same-run claim: temp tokens die in ~1h, so claim minutes after mint.
+        # Any failure leaves lanes unclaimed (status quo); job never fails here.
+        run: |
+          pip install playwright 2>&1 | tail -1 || echo "playwright pip note"
+          python3 -m playwright install chromium --with-deps 2>&1 | tail -2 || echo "chromium note"
+          python3 scripts/fleet-claim.py 2>&1 | tail -15 || echo "claim exit $?"
 
       - name: Run fleet cloud pipeline
         env:
