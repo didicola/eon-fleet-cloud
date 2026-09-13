@@ -98,11 +98,20 @@ def deploy_worker(aid, tok, name='eonbrain'):
 
 def main():
     target = int(os.environ.get('EON_TARGET', '1'))
+    # Birth pacing (no-CPU survival algorithm): mint only up to MIN_LIVE live
+    # lanes, using last run's health flags. When Ubuntu-on claiming keeps live
+    # high, Actions stands down (saves minutes, stops registry bloat).
+    min_live = int(os.environ.get('EON_MIN_LIVE', '6'))
     reg = load_reg()
     rounds = reg.get('rounds', [])
-    print(f"[fleet] {len(rounds)} rounds, minting {target} new")
+    live_now = sum(1 for r in rounds if r.get('status') == 'live')
+    need = max(0, min(min_live - live_now, target))
+    print(f"[fleet] {len(rounds)} rounds, live={live_now}, minting {need} new (target {target}, min_live {min_live})")
+    if need == 0:
+        print("[fleet] pacing: live count sufficient, no mint this run")
+        return
 
-    for i in range(target):
+    for i in range(need):
         m = mint()
         if not m or not m.get('account', {}).get('id'):
             print(f"[mint] #{i} failed")

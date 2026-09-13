@@ -48,7 +48,14 @@ def main():
     print(f"[fleet] {len(rounds)} rounds in registry")
 
     # Health-check each round (try /status, /api/status, /health, then /)
+    # Longevity inference (no-CPU survival algorithm): a lane live past
+    # TEMP_LIFE_MIN is almost certainly claimed (temp tokens die ~1h), so it
+    # counts as persistent without any new data or browser. Survives restarts:
+    # once persistent, always persistent unless observed dead twice in a row.
+    import datetime
+    TEMP_LIFE_MIN = int(os.environ.get('EON_TEMP_LIFE_MIN', '70'))
     live = 0
+    persist = 0
     for r in rounds:
         url = r.get('url', '')
         if not url: continue
@@ -62,13 +69,38 @@ def main():
             except Exception:
                 continue
         if ok: live += 1
+        prev_live = r.get('status') == 'live'
+        if ok and prev_live:
+            r['live_streak'] = int(r.get('live_streak', 1)) + 1
+        elif ok:
+            r['live_streak'] = 1
+        else:
+            r['live_streak'] = 0
+        try:
+            age_min = (datetime.datetime.strptime(now(), "%Y-%m-%dT%H:%M:%SZ")
+                       - datetime.datetime.strptime(r.get('minted', now()), "%Y-%m-%dT%H:%M:%SZ")).total_seconds() / 60
+        except Exception:
+            age_min = 0
+        if r.get('claim_status') == 'claimed' or r.get('persistent'):
+            r['persistent'] = True
+        elif ok and age_min > TEMP_LIFE_MIN:
+            r['persistent'] = True
+            r['persistent_why'] = f'inferred: live at age {int(age_min)}min > temp life'
+        if r.get('persistent') and not ok:
+            r['dead_streak'] = int(r.get('dead_streak', 0)) + 1
+            if r['dead_streak'] >= 2:
+                r['persistent'] = False
+        if r.get('persistent') and ok:
+            r['dead_streak'] = 0
+            persist += 1
         r['status'] = 'live' if ok else 'dead'
         r['last_check'] = now()
-        print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> {'live' if ok else 'dead'}")
+        print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> {'live' if ok else 'dead'}{' P' if r.get('persistent') else ''}")
     reg['live'] = live
+    reg['persistent'] = persist
     reg['updated'] = now()
     save_reg(reg)
-    print(f"[fleet] live={live}/{len(rounds)}")
+    print(f"[fleet] live={live}/{len(rounds)} persistent={persist}")
 
     # Push to dashboard (permanent URL) — auth via ?token= query param
     dash = os.environ.get('EON_DASHBOARD_URL', '')
@@ -90,7 +122,7 @@ def main():
     bot = os.environ.get('EON_TG_BOT', '')
     chat = os.environ.get('EON_TG_CHANNEL', '') or os.environ.get('EON_TG_CHAT', '')
     if bot and chat:
-        msg = f"EON Fleet Cloud: {live}/{len(rounds)} live (GitHub Actions 24/7)"
+        msg = f"EON Fleet Cloud: {live}/{len(rounds)} live ({persist} persistent) (GitHub Actions 24/7)"
         code, body = http('POST', f'https://api.telegram.org/bot{bot}/sendMessage',
                           data={'chat_id': chat, 'text': msg}, timeout=20)
         print(f"[tg] -> {code}")
