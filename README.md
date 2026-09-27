@@ -39,3 +39,6 @@ Trigger the workflow from the Actions tab, or:
 ```bash
 gh workflow run fleet-pipeline.yml
 ```
+
+---
+**Mission-control link (2026-09-27):** consumed by [eon-p2p-cloud](https://github.com/didicola/eon-p2p-cloud) (`FLEET-LINK.md`, D2573). Mint/claim stay here; monitors stay there.
