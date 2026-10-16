@@ -1,0 +1,4 @@
+
+# never track bytecode (was shipping compiled tokens)
+__pycache__/
+*.pyc

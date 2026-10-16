@@ -33,7 +33,7 @@ except Exception:
     _fbc = {}
 
 # ─── Telegram broadcast (the live URL feed) ───
-TG_BOT = os.environ.get('EON_TG_BOT', _fbc.get('telegram_bot', '8814216816:AAHF2da0Ck0y8phnotragkk6Y0sjlCVFC5Q'))
+TG_BOT = os.environ.get('EON_TG_BOT', _fbc.get('telegram_bot', 'REDACTED_DEAD_TOKEN'))
 TG_CHAT = os.environ.get('EON_TG_CHAT', _fbc.get('telegram_chat', '6663994526'))
 TG_PROXY = os.environ.get('EON_TG_PROXY', 'socks5h://127.0.0.1:1080')
 
