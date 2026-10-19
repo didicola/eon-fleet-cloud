@@ -54,15 +54,29 @@ def main():
     # once persistent, always persistent unless observed dead twice in a row.
     import datetime
     TEMP_LIFE_MIN = int(os.environ.get('EON_TEMP_LIFE_MIN', '70'))
+    CHECK_TIMEOUT = int(os.environ.get('EON_HEALTH_TIMEOUT', '4'))
+    SKIP_DEAD_DAYS = int(os.environ.get('EON_SKIP_DEAD_DAYS', '7'))
     live = 0
     persist = 0
     for r in rounds:
         url = r.get('url', '')
         if not url: continue
+        # Skip long-dead lanes: re-probing every expired temp account on each
+        # run burns the 25-min job budget and blocks the registry commit.
+        if r.get('status') == 'dead' and not r.get('persistent'):
+            try:
+                last = r.get('last_check') or r.get('minted') or r.get('deployed_at') or ''
+                age_days = (datetime.datetime.strptime(now(), "%Y-%m-%dT%H:%M:%SZ")
+                            - datetime.datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")).total_seconds() / 86400
+                if age_days > SKIP_DEAD_DAYS:
+                    r['last_check'] = now()
+                    continue
+            except Exception:
+                pass
         ok = False
         for ep in ('/status', '/api/status', '/health', '/'):
             try:
-                code, body = http('GET', url.rstrip('/') + ep, timeout=10)
+                code, body = http('GET', url.rstrip('/') + ep, timeout=CHECK_TIMEOUT)
                 if code == 200 and body.strip() and 'not found' not in body:
                     ok = True
                     break
