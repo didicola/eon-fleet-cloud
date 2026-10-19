@@ -2,3 +2,6 @@
 # never track bytecode (was shipping compiled tokens)
 __pycache__/
 *.pyc
+
+# mint state holds account credentials; never publish (push protection blocks them)
+state/
