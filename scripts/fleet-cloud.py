@@ -120,6 +120,17 @@ def main():
                        - datetime.datetime.strptime(r.get('minted', now()), "%Y-%m-%dT%H:%M:%SZ")).total_seconds() / 60
         except Exception:
             age_min = 0
+        # Temp accounts die around TEMP_LIFE_MIN. A lane that is not serving a
+        # real 200 and is past that age (answering only edge challenges) is
+        # presumed deleted — this pipeline does not claim, so it cannot be a
+        # claimed lane. Without this, a stale 403 would hold "live" forever and
+        # silently stop the treadmill.
+        if (ok and not live_ok and not r.get('persistent')
+                and r.get('claim_status') != 'claimed' and age_min > TEMP_LIFE_MIN):
+            ok = False
+            r['probe'] = 'dead(temp-expired)'
+            r['dead_streak'] = max(2, int(r.get('dead_streak', 0)))
+            live = max(0, live - 1)
         if r.get('claim_status') == 'claimed' or r.get('persistent'):
             r['persistent'] = True
         elif live_ok and age_min > TEMP_LIFE_MIN:
