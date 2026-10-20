@@ -9,7 +9,7 @@ on:
         description: "Force-mint test: override EON_MIN_LIVE (default 6)"
         required: false
         default: ""
-  repository_dispatch:        # on-demand mint from twin/phone (type: fleet-mint-now)
+  repository_dispatch:        # primary 10-min tick: eon-fleet-syncer CF cron -> this
     types: [fleet-mint-now]
   push:
     branches: [main]
@@ -51,6 +51,7 @@ jobs:
         env:
           EON_TARGET: "3"
           EON_MIN_LIVE: ${{ inputs.min_live || '6' }}
+          EON_DAILY_MINT_CAP: "120"
         run: |
           python3 scripts/fleet-mint.py 2>&1 | tail -30 || echo "mint exit $?"
 

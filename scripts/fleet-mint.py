@@ -5,7 +5,7 @@ Mints fresh Cloudflare temp accounts, deploys ghost workers, re-enables
 subdomains, and registers them. No browser needed (claim is separate).
 This keeps the fleet alive even when the local device is off.
 """
-import json, os, subprocess, sys, time, urllib.request, urllib.error, pathlib
+import json, os, subprocess, sys, time, urllib.request, urllib.error, pathlib, datetime
 
 REG = 'scripts/cloud_rounds.json'
 UA = {'User-Agent': 'eon-fleet-cloud/1.0'}
@@ -102,13 +102,20 @@ def main():
     # lanes, using last run's health flags. When Ubuntu-on claiming keeps live
     # high, Actions stands down (saves minutes, stops registry bloat).
     min_live = int(os.environ.get('EON_MIN_LIVE', '6'))
+    cap = int(os.environ.get('EON_DAILY_MINT_CAP', '120'))
     reg = load_reg()
     rounds = reg.get('rounds', [])
     live_now = sum(1 for r in rounds if r.get('status') == 'live')
+    reg.setdefault('mint_log', [])
+    today = now()[:10]
+    minted_today = sum(1 for e in reg.get('mint_log', []) if str(e.get('ts', ''))[:10] == today)
     need = max(0, min(min_live - live_now, target))
-    print(f"[fleet] {len(rounds)} rounds, live={live_now}, minting {need} new (target {target}, min_live {min_live})")
+    if minted_today >= cap:
+        need = 0
+        print(f"[fleet] daily mint cap reached ({minted_today}/{cap}), standing down")
+    print(f"[fleet] {len(rounds)} rounds, live={live_now}, minting {need} new (target {target}, min_live {min_live}, minted_today {minted_today}/{cap})")
     if need == 0:
-        print("[fleet] pacing: live count sufficient, no mint this run")
+        print("[fleet] pacing: no mint this run")
         return
 
     for i in range(need):
@@ -134,13 +141,40 @@ def main():
             # persist token for later claim
             pathlib.Path('state').mkdir(exist_ok=True)
             pathlib.Path(f'state/{aid}.mint.json').write_text(json.dumps(m))
+            reg['mint_log'].append({'ts': now(), 'aid': aid})
+            minted_today += 1
             print(f"[mint] registered {lane}")
         time.sleep(2)
 
+    # Bound the registry: a dead temp lane is final after ~1h (the preview account
+    # is deleted), so keep one day of history, dedupe, and cap the file. The
+    # mint_log is the durable daily-cap ledger (survives pruning).
+    def _age_h(x):
+        try:
+            return (datetime.datetime.strptime(now(), "%Y-%m-%dT%H:%M:%SZ")
+                    - datetime.datetime.strptime(x.get('minted', now()), "%Y-%m-%dT%H:%M:%SZ")).total_seconds() / 3600
+        except Exception:
+            return 0
+    seen = set()
+    kept = []
+    for r in sorted(rounds, key=lambda x: x.get('minted', ''), reverse=True):
+        key = r.get('aid') or r.get('url')
+        if key in seen:
+            continue
+        seen.add(key)
+        if r.get('status') == 'dead' and not r.get('persistent') and _age_h(r) > 24:
+            continue
+        kept.append(r)
+    kept = kept[:300]
+    if len(kept) != len(rounds):
+        print(f"[prune] rounds {len(rounds)} -> {len(kept)}")
+    rounds = kept
     reg['rounds'] = rounds
+    cutoff = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time() - 7 * 86400))
+    reg['mint_log'] = [e for e in reg.get('mint_log', []) if str(e.get('ts', '')) >= cutoff][-2000:]
     reg['updated'] = now()
     save_reg(reg)
-    print(f"[fleet] done, {len(rounds)} total")
+    print(f"[fleet] done, {len(rounds)} total, minted_today {minted_today}/{cap}")
 
 if __name__ == '__main__':
     main()

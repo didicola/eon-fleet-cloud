@@ -68,17 +68,47 @@ def main():
         if r.get('status') == 'dead' and not r.get('persistent'):
             r['last_check'] = now()
             continue
-        ok = False
+        live_ok = False
+        reachable = False
+        codes = []
         for ep in ('/status', '/api/status', '/health', '/'):
             try:
                 code, body = http('GET', url.rstrip('/') + ep, timeout=CHECK_TIMEOUT)
+                codes.append(code)
                 if code == 200 and body.strip() and 'not found' not in body:
-                    ok = True
+                    live_ok = True
                     break
+                # Any answer that is not DNS-death means the worker still exists.
+                # Cloudflare serves 403/429 challenges to datacenter egress; those
+                # used to flip healthy lanes to dead and over-fire minting.
+                if code and code != 404:
+                    reachable = True
             except Exception:
                 continue
-        if ok: live += 1
         prev_live = r.get('status') == 'live'
+        if live_ok:
+            ok = True
+            r['probe'] = 'live'
+        elif reachable:
+            ok = prev_live
+            r['probe'] = 'unknown(' + (','.join(str(c) for c in codes) or '?') + ')'
+        else:
+            ok = False
+            r['probe'] = 'dead(dns)'
+        if not ok:
+            r['dead_streak'] = int(r.get('dead_streak', 0)) + 1
+            # Two consecutive dead probes before burying a lane that was live last
+            # run: a single DNS/timeout blip must not trigger a mint.
+            if prev_live and r['dead_streak'] < 2:
+                ok = True
+                r['probe'] = 'unknown(first dead probe)'
+        # Clear the strike counter only on a real signal (200 or an ambiguous
+        # answer). Clearing it on the forced first-strike grace would make the
+        # two-strike rule unreachable.
+        if live_ok or reachable:
+            r['dead_streak'] = 0
+        if ok:
+            live += 1
         if ok and prev_live:
             r['live_streak'] = int(r.get('live_streak', 1)) + 1
         elif ok:
@@ -96,15 +126,13 @@ def main():
             r['persistent'] = True
             r['persistent_why'] = f'inferred: live at age {int(age_min)}min > temp life'
         if r.get('persistent') and not ok:
-            r['dead_streak'] = int(r.get('dead_streak', 0)) + 1
             if r['dead_streak'] >= 2:
                 r['persistent'] = False
         if r.get('persistent') and ok:
-            r['dead_streak'] = 0
             persist += 1
         r['status'] = 'live' if ok else 'dead'
         r['last_check'] = now()
-        print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> {'live' if ok else 'dead'}{' P' if r.get('persistent') else ''}")
+        print(f"  {r.get('name','?')[:20]:20} {url[:40]:40} -> {'live' if ok else 'dead'}{' P' if r.get('persistent') else ''} [{r.get('probe','?')}]")
     reg['live'] = live
     reg['persistent'] = persist
     reg['updated'] = now()
