@@ -35,6 +35,7 @@ REG = 'scripts/cloud_rounds.json'
 MAX_AGE_MIN = int(os.environ.get('CLAIM_MAX_AGE_MIN', '50'))
 CLICK_ROUNDS = 3
 CHALLENGE_WAIT_S = int(os.environ.get('CLAIM_CHALLENGE_WAIT_S', '45'))
+CLAIM_TIMEOUT_S = int(os.environ.get('CLAIM_TIMEOUT_S', '150'))
 HEADLESS = os.environ.get('CLAIM_HEADLESS', '1') != '0'
 # Playwright rejects cookie expiry past year 9999; Firefox sometimes stores
 # millisecond stamps in moz_cookies.expiry.
@@ -247,6 +248,10 @@ def keepalive(context):
     page = context.new_page()
     try:
         page.goto('https://dash.cloudflare.com/', wait_until='domcontentloaded', timeout=45000)
+        # The dash SPA needs a few seconds to boot; the API probe is definitive
+        # (markers depend on copy/locale and miss a still-rendering page).
+        if api_probe(page):
+            return 'AUTHED'
         low = wait_out_challenge(page, 30)
         if any(x in low for x in CHALLENGE_MARKERS):
             return 'CHALLENGE'
@@ -254,7 +259,7 @@ def keepalive(context):
             return 'LOGIN-REQUIRED'
         if any(x in low for x in DASH_MARKERS):
             return 'AUTHED'
-        return 'UNKNOWN'
+        return 'UNKNOWN:' + page_diag(page)
     except Exception as e:
         return 'ERROR:' + redact(e, 80)
     finally:
@@ -264,43 +269,100 @@ def keepalive(context):
             pass
 
 
+def page_diag(page):
+    """Redacted snapshot of what actually rendered, for logs on a failed claim."""
+    try:
+        u = re.sub(r'claimToken=[A-Za-z0-9_\-]+', 'claimToken=***', page.url or '')
+        u = re.sub(r'^https?://', '', u)[:70]
+    except Exception:
+        u = '?'
+    try:
+        t = (page.title() or '')[:50]
+    except Exception:
+        t = '?'
+    try:
+        low = body_text(page, 3000)
+    except Exception:
+        low = ''
+    return f"url={u} title={t!r} text={' '.join(low.split())[:110]!r}"
+
+
+def api_probe(page, path='/api/v4/user', tries=6, gap=3):
+    """Definitive session check: the dash API answers 200 only with a live session."""
+    for attempt in range(tries):
+        r = None
+        try:
+            r = page.evaluate(
+                "async (p) => { try { const r = await fetch(p, {headers: {accept: 'application/json'},"
+                " credentials: 'include'}); const b = await r.text();"
+                " return {status: r.status, body: b.slice(0, 120)}; }"
+                " catch (e) { return {status: -1, body: String(e).slice(0, 80)}; } }",
+                path)
+        except Exception:
+            r = None
+        if isinstance(r, dict) and r.get('status') == 200 and '"result"' in (r.get('body') or ''):
+            return True
+        if attempt + 1 < tries:
+            try:
+                page.wait_for_timeout(gap * 1000)
+            except Exception:
+                pass
+    return False
+
+
 def claim_one(context, url):
-    """Open one claim URL and click the claim control (two-step modal safe)."""
+    """Open one claim URL and click the claim control.
+
+    Mirrors the working box lane (eon-stack/matrix-claim.py): the dashboard is an
+    SPA that renders the claim control only after it boots, so poll for up to
+    CLAIM_TIMEOUT_S instead of looking once. A one-shot check reports NO-BUTTON
+    on a page that would have claimed a second later.
+    """
     page = context.new_page()
     try:
         page.goto(url, wait_until='domcontentloaded', timeout=45000)
-        low = wait_out_challenge(page)
-        if any(x in low for x in CHALLENGE_MARKERS):
-            return 'CHALLENGE', 'security check did not clear in time'
-        if any(x in low for x in AUTH_MARKERS) or '/login' in (page.url or ''):
-            return 'AUTH-REQUIRED', 'session expired or not logged in'
-        if any(x in low for x in CLAIMED_MARKERS):
-            return 'ALREADY', 'page already says claimed'
-
+        deadline = time.time() + CLAIM_TIMEOUT_S
         clicked = 0
-        for _ in range(CLICK_ROUNDS):
-            btn = find_claim_button(page)
-            if not btn:
-                break
-            try:
-                btn.click(timeout=10000)
-                clicked += 1
-            except Exception:
-                break
-            page.wait_for_timeout(6000)
+        low = ''
+        while True:
             low = body_text(page)
             if any(x in low for x in CHALLENGE_MARKERS):
                 low = wait_out_challenge(page, 20)
-            if any(x in low for x in AUTH_MARKERS):
-                return 'AUTH-REQUIRED', 'login requested after click'
+            if any(x in low for x in AUTH_MARKERS) or '/login' in (page.url or ''):
+                return 'AUTH-REQUIRED', 'session expired or not logged in | ' + page_diag(page)
             if any(x in low for x in CLAIMED_MARKERS):
-                return 'CLAIMED', 'confirmed after click'
+                return ('CLAIMED' if clicked else 'ALREADY'), 'page says claimed | ' + page_diag(page)
+
+            btn = find_claim_button(page)
+            if btn is not None:
+                try:
+                    btn.click(timeout=10000)
+                    clicked += 1
+                except Exception:
+                    pass
+                page.wait_for_timeout(6000)
+                low = body_text(page)
+                if any(x in low for x in CLAIMED_MARKERS):
+                    return 'CLAIMED', 'confirmed after click | ' + page_diag(page)
+                if any(x in low for x in AUTH_MARKERS) or '/login' in (page.url or ''):
+                    return 'AUTH-REQUIRED', 'login requested after click'
+                if clicked >= CLICK_ROUNDS:
+                    break
+                continue
+
+            if time.time() >= deadline:
+                break
+            try:
+                page.wait_for_timeout(5000)
+                page.wait_for_load_state('domcontentloaded', timeout=4000)
+            except Exception:
+                pass
 
         if clicked == 0:
-            return 'NO-BUTTON', 'no claim control visible'
+            return 'NO-BUTTON', f'no claim control after {CLAIM_TIMEOUT_S}s | ' + page_diag(page)
         if any(x in low for x in ('claimed', 'success')):
             return 'CLAIMED', 'page shows claimed/success'
-        return 'UNKNOWN', 'clicked; no confirmation text'
+        return 'UNKNOWN', 'clicked; no confirmation text | ' + page_diag(page)
     finally:
         try:
             page.close()
@@ -346,7 +408,7 @@ def main():
             for idx, ctx in contexts:
                 ka = keepalive(ctx)
                 print(f'[claim] keepalive session {idx} -> {ka}')
-                if ka in ('AUTHED', 'UNKNOWN'):
+                if ka == 'AUTHED' or ka.startswith('UNKNOWN'):
                     usable.append((idx, ctx))
             if not usable:
                 print('::warning::[claim] all EON_CF_SESSION sessions expired (dashboard asks for login) — export a fresh session')
