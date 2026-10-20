@@ -122,7 +122,7 @@ def main():
             age_min = 0
         if r.get('claim_status') == 'claimed' or r.get('persistent'):
             r['persistent'] = True
-        elif ok and age_min > TEMP_LIFE_MIN:
+        elif live_ok and age_min > TEMP_LIFE_MIN:
             r['persistent'] = True
             r['persistent_why'] = f'inferred: live at age {int(age_min)}min > temp life'
         if r.get('persistent') and not ok:

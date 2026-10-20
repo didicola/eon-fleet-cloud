@@ -24,6 +24,36 @@ fleet-cloud.py ──► health-check each round
 The ghost workers themselves run on **Cloudflare Workers edge** (24/7, always-on).
 This pipeline keeps them discoverable and healthy without needing the laptop.
 
+## 2026-10-20 — cloud ticker live, locals off
+- **Primary tick:** Cloudflare Worker `eon-fleet-syncer` (cron `*/10`) POSTs a
+  GitHub `repository_dispatch` (`fleet-mint-now`) on every tick. The GH Actions
+  `schedule` stays enabled as a fallback but is sparse (measured ~6–8 runs/day).
+  The worker exposes `/health` and `/tick?k=…` (guarded); source was repurposed
+  from an inert worker whose `scheduled` handler was never exported. Original
+  source backed up on the box (`~/eon-backups/eon-fleet-syncer.src-*.js`).
+- **Free-plan cron cap:** the account allows only **5 cron triggers**. The
+  ticker took the slot of the stale `fluid-matrix` `*/5` probe (worker remains
+  deployed; only its cron is paused). To restore it, remove the ticker cron
+  first, then `PUT …/workers/scripts/fluid-matrix/schedules` with
+  `[{"cron":"*/5 * * * *"}]`.
+- **Probe honesty:** Cloudflare serves `403/429` challenges to GitHub's
+  datacenter egress, which used to flip healthy lanes to `dead` and over-mint.
+  The probe now treats any non-DNS answer as *unknown-alive*, requires **two
+  consecutive** dead probes before burying a lane, and infers `persistent` only
+  from a real `200` (a challenge is not proof of a claim).
+- **Pacing:** `EON_MIN_LIVE=6`, `EON_TARGET=3`, plus a durable
+  `EON_DAILY_MINT_CAP=120` ledger (`mint_log`) and a 24 h/300-row registry prune.
+- **Locals off:** the ubuntu round-manager cron (`*/10 eon-round-manager.py 4`)
+  is archived and commented out; its live processes were terminated. The mint →
+  deploy → register path now runs entirely on GitHub Actions + the CF Worker
+  tick. The only remaining local lane is the owner's separate own-cloud
+  auto-renew timer (not the temp-fleet pipeline).
+- **Claim blocker (unchanged, human-gated):** the mother Cloudflare account is
+  Google-SSO-only; no replayable session exists in the repo, so the claim step
+  logs `EON_CF_SESSION secret not set — session claim skipped`. A human claim
+  click (or a fresh exported session + repo secret) is still required for
+  permanence. Claim URLs from the last local round expire ~13:23Z 2026-10-20.
+
 ## Secrets (GitHub repo → Settings → Secrets)
 | Secret | Value |
 |--------|-------|
