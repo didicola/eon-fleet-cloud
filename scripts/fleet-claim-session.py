@@ -36,6 +36,9 @@ MAX_AGE_MIN = int(os.environ.get('CLAIM_MAX_AGE_MIN', '50'))
 CLICK_ROUNDS = 3
 CHALLENGE_WAIT_S = int(os.environ.get('CLAIM_CHALLENGE_WAIT_S', '45'))
 HEADLESS = os.environ.get('CLAIM_HEADLESS', '1') != '0'
+# Playwright rejects cookie expiry past year 9999; Firefox sometimes stores
+# millisecond stamps in moz_cookies.expiry.
+MAX_EXPIRY = 253402300799  # 9999-12-31T23:59:59Z, in seconds
 
 TOKEN_RE = re.compile(r'claimToken=[A-Za-z0-9_\-]+')
 URL_RE = re.compile(r'https?://[^\s"\']+')
@@ -104,6 +107,10 @@ def normalize(cookies):
                 exp = float(exp)
             except Exception:
                 exp = -1
+            if exp > MAX_EXPIRY:
+                # millisecond stamp -> seconds; anything still out of range is
+                # dropped to a session cookie instead of failing add_cookies()
+                exp = exp / 1000 if exp / 1000 <= MAX_EXPIRY else -1
             if exp <= 0:
                 exp = -1
             out.append({
@@ -325,8 +332,8 @@ def main():
                     ctx = browser.new_context()
                     ctx.add_cookies(cs)
                     contexts.append((i + 1, ctx))
-                except Exception:
-                    print(f'[claim] session {i + 1} rejected by browser (format); skipped')
+                except Exception as e:
+                    print(f'[claim] session {i + 1} rejected by browser: {redact(e, 160)}')
             if not contexts:
                 print('[claim] no usable sessions — skip')
                 browser.close()

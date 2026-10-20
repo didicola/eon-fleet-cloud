@@ -36,6 +36,26 @@ import sys
 import tempfile
 
 
+# Browser cookie stores reject expiry past year 9999, and Firefox sometimes
+# records millisecond stamps (e.g. 1823944649292) in moz_cookies.expiry.
+MAX_EXPIRY = 253402300799  # 9999-12-31T23:59:59Z, in seconds
+
+
+def expiry_seconds(expiry):
+    """moz_cookies.expiry -> seconds since epoch, or -1 for a session cookie."""
+    try:
+        e = float(expiry)
+    except (TypeError, ValueError):
+        return -1
+    if e <= 0:
+        return -1
+    if e > MAX_EXPIRY and e / 1000 <= MAX_EXPIRY:
+        e = e / 1000          # millisecond stamp -> seconds
+    if e > MAX_EXPIRY:
+        return -1             # unrecoverable: keep it as a session cookie
+    return int(e)
+
+
 def profile_dbs():
     pats = [
         os.path.expanduser('~/.config/eon/mothers/*/cookies.sqlite'),
@@ -92,7 +112,7 @@ def main():
                 'name': name,
                 'path': p,
                 'value': value,
-                'expires': expiry if expiry else -1,
+                'expires': expiry_seconds(expiry),
                 'secure': bool(sec),
                 'httpOnly': bool(http),
                 'sameSite': same,
