@@ -55,24 +55,19 @@ def main():
     import datetime
     TEMP_LIFE_MIN = int(os.environ.get('EON_TEMP_LIFE_MIN', '70'))
     CHECK_TIMEOUT = int(os.environ.get('EON_HEALTH_TIMEOUT', '4'))
-    SKIP_DEAD_DAYS = int(os.environ.get('EON_SKIP_DEAD_DAYS', '7'))
     live = 0
     persist = 0
     for r in rounds:
         url = r.get('url', '')
         if not url: continue
-        # Skip long-dead lanes: re-probing every expired temp account on each
-        # run burns the 25-min job budget and blocks the registry commit.
+        # Dead ephemeral lanes are final: a temporary preview account is deleted
+        # after ~60 minutes, so its worker URL never comes back. Re-probing every
+        # dead round (4 endpoints x 4s each) is what pushed each run toward the
+        # 25-minute job budget. Persistent rounds are always re-checked; a
+        # transient failure on a live lane is lost only until the next mint.
         if r.get('status') == 'dead' and not r.get('persistent'):
-            try:
-                last = r.get('last_check') or r.get('minted') or r.get('deployed_at') or ''
-                age_days = (datetime.datetime.strptime(now(), "%Y-%m-%dT%H:%M:%SZ")
-                            - datetime.datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")).total_seconds() / 86400
-                if age_days > SKIP_DEAD_DAYS:
-                    r['last_check'] = now()
-                    continue
-            except Exception:
-                pass
+            r['last_check'] = now()
+            continue
         ok = False
         for ep in ('/status', '/api/status', '/health', '/'):
             try:
