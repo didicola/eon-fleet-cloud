@@ -2,21 +2,26 @@
 """
 EON FLEET CLAIM — cloud session lane (GitHub Actions, no local box).
 
-This is the cloud port of the ubuntu claim step:
-  eon-matrix-renew.sh -> Firefox "mother" profile -> matrix-claim.py -> Claim
+Cloudflare's claim flow (developers.cloudflare.com/workers/platform/claim-deployments):
+the claim URL is a bearer credential, but the person claiming must "sign in to
+Cloudflare or create an account" and complete the dashboard prompts. The ubuntu
+lane keeps logged-in Firefox "mother" profiles for exactly that. This script is
+the cloud port:
 
-The ubuntu lane rotates logged-in Firefox "mother" profiles on a residential /
-WARP egress. GitHub's bare headless Chromium is stopped by Cloudflare's
-"performing security verification" wall — that is why the fleet registry showed
-0 persistent. Here we reuse the mother sessions' Cloudflare cookies (secret
-EON_CF_SESSION, produced by scripts/export-cf-session.py) in Playwright Firefox,
-after joining the same WARP egress class the box uses. Each fresh mint
-(state/*.mint.json) is opened at its claim URL and claimed; the matching
-registry round is marked claim_status=claimed so fleet-cloud.py counts it.
+  * mother sessions' Cloudflare cookies come from repo secret EON_CF_SESSION
+    (one-time export with scripts/export-cf-session.py)
+  * Playwright Firefox (headful under Xvfb in CI) uses them on a WARP egress,
+    the same network class the box uses
+  * every run does an authenticated dashboard keepalive visit: Cloudflare's
+    dashboard session times out after 72 hours WITHOUT ACTIVITY, and this
+    pipeline runs every 10 minutes, so an exported session stays warm with no
+    local machine involved
+  * each successful claim marks the registry round claim_status=claimed, which
+    fleet-cloud.py counts as persistent
 
-Secret: EON_CF_SESSION = {"sessions":[{"source":...,"cookies":[...]}, ...]}
-        (also accepts {"cookies":[...]} or a flat cookie list)
-Never prints cookie values, claim tokens, or account emails.
+No session -> nothing to claim with; exit cleanly. Never prints cookie values,
+claim tokens, or account emails. If the dashboard asks for login, prints
+AUTH-REQUIRED (surfaced as a GitHub warning) and does not touch the registry.
 """
 import glob
 import json
@@ -29,9 +34,27 @@ STATE_GLOB = 'state/*.mint.json'
 REG = 'scripts/cloud_rounds.json'
 MAX_AGE_MIN = int(os.environ.get('CLAIM_MAX_AGE_MIN', '50'))
 CLICK_ROUNDS = 3
+CHALLENGE_WAIT_S = int(os.environ.get('CLAIM_CHALLENGE_WAIT_S', '45'))
+HEADLESS = os.environ.get('CLAIM_HEADLESS', '1') != '0'
 
 TOKEN_RE = re.compile(r'claimToken=[A-Za-z0-9_\-]+')
 URL_RE = re.compile(r'https?://[^\s"\']+')
+
+CHALLENGE_MARKERS = (
+    'performing security verification', 'just a moment', 'verify you are human',
+    'checking your browser', 'attention required', 'enable javascript and cookies',
+)
+AUTH_MARKERS = (
+    'log in to cloudflare', 'sign in to cloudflare', 'forgot your password',
+    'create your account', 'enter your email',
+)
+DASH_MARKERS = (
+    'workers & pages', 'account home', 'websites', 'domain registration', 'add site',
+)
+CLAIMED_MARKERS = (
+    'has been claimed', 'already claimed', 'account claimed', 'claim successful',
+    'successfully claimed', 'you now own', 'account is yours',
+)
 
 
 def redact(s, n=120):
@@ -127,7 +150,7 @@ def load_sessions():
         else:
             sessions = [normalize(d)]
 
-    # drop empties and identical cookie sets (no values are printed)
+    # drop empties and identical cookie sets (values never printed)
     uniq = []
     seen = set()
     for cs in sessions:
@@ -160,8 +183,32 @@ def mark_claimed(aid, verdict):
         print(f"[claim] registry update failed: {redact(e)}")
 
 
+def body_text(page, timeout=8000):
+    try:
+        return page.locator('body').inner_text(timeout=timeout).lower()
+    except Exception:
+        return ''
+
+
+def wait_out_challenge(page, seconds=CHALLENGE_WAIT_S):
+    """Cloudflare's interstitial auto-resolves; give it time instead of failing at 5s."""
+    end = time.time() + seconds
+    low = ''
+    while True:
+        low = body_text(page)
+        if not any(x in low for x in CHALLENGE_MARKERS):
+            return low
+        if time.time() >= end:
+            return low
+        try:
+            page.wait_for_timeout(2500)
+            page.wait_for_load_state('domcontentloaded', timeout=5000)
+        except Exception:
+            pass
+
+
 def find_claim_button(page):
-    """The dashboard's claim control: button role whose name contains 'claim'."""
+    """The dashboard's claim control: button whose accessible name contains 'claim'."""
     try:
         btns = page.get_by_role('button', name=re.compile(r'claim', re.I))
         n = btns.count()
@@ -188,14 +235,26 @@ def find_claim_button(page):
     return None
 
 
-CLAIMED_MARKERS = (
-    'has been claimed', 'already claimed', 'account claimed', 'claim successful',
-    'successfully claimed', 'you now own', 'account is yours',
-)
-CHALLENGE_MARKERS = (
-    'performing security verification', 'just a moment', 'verify you are human',
-    'checking your browser', 'attention required', 'enable javascript and cookies',
-)
+def keepalive(context):
+    """Authenticated dashboard visit: resets Cloudflare's 72h idle timeout."""
+    page = context.new_page()
+    try:
+        page.goto('https://dash.cloudflare.com/', wait_until='domcontentloaded', timeout=45000)
+        low = wait_out_challenge(page, 30)
+        if any(x in low for x in CHALLENGE_MARKERS):
+            return 'CHALLENGE'
+        if any(x in low for x in AUTH_MARKERS):
+            return 'LOGIN-REQUIRED'
+        if any(x in low for x in DASH_MARKERS):
+            return 'AUTHED'
+        return 'UNKNOWN'
+    except Exception as e:
+        return 'ERROR:' + redact(e, 80)
+    finally:
+        try:
+            page.close()
+        except Exception:
+            pass
 
 
 def claim_one(context, url):
@@ -203,13 +262,11 @@ def claim_one(context, url):
     page = context.new_page()
     try:
         page.goto(url, wait_until='domcontentloaded', timeout=45000)
-        page.wait_for_timeout(5000)
-        try:
-            low = page.locator('body').inner_text(timeout=10000).lower()
-        except Exception:
-            low = ''
+        low = wait_out_challenge(page)
         if any(x in low for x in CHALLENGE_MARKERS):
-            return 'CHALLENGE', 'cloudflare security check'
+            return 'CHALLENGE', 'security check did not clear in time'
+        if any(x in low for x in AUTH_MARKERS) or '/login' in (page.url or ''):
+            return 'AUTH-REQUIRED', 'session expired or not logged in'
         if any(x in low for x in CLAIMED_MARKERS):
             return 'ALREADY', 'page already says claimed'
 
@@ -224,12 +281,11 @@ def claim_one(context, url):
             except Exception:
                 break
             page.wait_for_timeout(6000)
-            try:
-                low = page.locator('body').inner_text(timeout=8000).lower()
-            except Exception:
-                low = ''
+            low = body_text(page)
             if any(x in low for x in CHALLENGE_MARKERS):
-                return 'CHALLENGE', 'challenge appeared after click'
+                low = wait_out_challenge(page, 20)
+            if any(x in low for x in AUTH_MARKERS):
+                return 'AUTH-REQUIRED', 'login requested after click'
             if any(x in low for x in CLAIMED_MARKERS):
                 return 'CLAIMED', 'confirmed after click'
 
@@ -248,14 +304,11 @@ def claim_one(context, url):
 def main():
     sessions = load_sessions()
     if not sessions:
-        print('[claim] EON_CF_SESSION not set (or no cookies) — session claim skipped')
+        print('[claim] EON_CF_SESSION not set — no claim credential; skipping (mint stays live)')
         return 0
 
     urls = fresh()
-    print(f'[claim] {len(urls)} fresh claim URL(s), {len(sessions)} mother session(s)')
-    if not urls:
-        return 0
-
+    print(f'[claim] {len(urls)} fresh claim URL(s), {len(sessions)} session(s), headless={HEADLESS}')
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
@@ -263,40 +316,71 @@ def main():
         return 0
 
     results = []
+    authed = False
     try:
         with sync_playwright() as p:
-            browser = p.firefox.launch(headless=True)
-            contexts = {}
-            for idx, (u, aid) in enumerate(urls):
-                si = idx % len(sessions)
-                ctx = contexts.get(si)
-                if ctx is None:
-                    try:
-                        ctx = browser.new_context()
-                        ctx.add_cookies(sessions[si])
-                    except Exception:
-                        print(f'[claim] session {si + 1} rejected by browser (format); skipped')
-                        contexts[si] = False
-                        ctx = None
-                    if ctx:
-                        contexts[si] = ctx
-                elif ctx is False:
-                    continue
-                if not ctx:
-                    continue
+            browser = p.firefox.launch(headless=HEADLESS)
+            contexts = []
+            for i, cs in enumerate(sessions):
                 try:
-                    v, d = claim_one(ctx, u)
-                except Exception as e:
-                    v, d = 'ERROR', redact(e)
-                print(f"[claim] {aid[:8] if aid else '?'} [s{si + 1}] -> {v}: {d}")
-                results.append((aid, v))
-                mark_claimed(aid, v)
-            for ctx in contexts.values():
-                if ctx:
+                    ctx = browser.new_context()
+                    ctx.add_cookies(cs)
+                    contexts.append(ctx)
+                except Exception:
+                    print(f'[claim] session {i + 1} rejected by browser (format); skipped')
+            if not contexts:
+                print('[claim] no usable sessions — skip')
+                browser.close()
+                return 0
+
+            # keepalive first: every run touches the session, so the 72h
+            # dashboard idle timeout never fires while the pipeline is alive.
+            ka = keepalive(contexts[0])
+            print(f'[claim] keepalive session 1 -> {ka}')
+            if ka == 'LOGIN-REQUIRED':
+                print('::warning::[claim] EON_CF_SESSION expired (dashboard asks for login) — export a fresh session')
+                for ctx in contexts:
                     try:
                         ctx.close()
                     except Exception:
                         pass
+                browser.close()
+                return 0
+            authed = ka in ('AUTHED', 'UNKNOWN')
+
+            for idx, (u, aid) in enumerate(urls):
+                ctx = contexts[idx % len(contexts)]
+                try:
+                    v, d = claim_one(ctx, u)
+                except Exception as e:
+                    v, d = 'ERROR', redact(e)
+                print(f"[claim] {aid[:8] if aid else '?'} [s{idx % len(contexts) + 1}] -> {v}: {d}")
+                if v == 'AUTH-REQUIRED':
+                    print('::warning::[claim] session expired during claim — export a fresh EON_CF_SESSION')
+                results.append((aid, v))
+                mark_claimed(aid, v)
+
+            # Persist refreshed cookies for an optional secret write-back.
+            # Only when the session proved usable, so a bad run cannot clobber
+            # a good stored secret. state/ is gitignored.
+            if authed or any(v in ('CLAIMED', 'ALREADY') for _, v in results):
+                try:
+                    dump = {'sessions': [
+                        {'source': f'cloud-{i + 1}', 'cookies': ctx.cookies()}
+                        for i, ctx in enumerate(contexts)
+                    ]}
+                    os.makedirs('state', exist_ok=True)
+                    with open('state/cf_session_refresh.json', 'w') as f:
+                        json.dump(dump, f)
+                    print('[claim] refreshed session state captured (state/cf_session_refresh.json)')
+                except Exception as e:
+                    print(f'[claim] refresh capture failed: {redact(e)}')
+
+            for ctx in contexts:
+                try:
+                    ctx.close()
+                except Exception:
+                    pass
             browser.close()
     except Exception as e:
         print(f'[claim] browser fatal: {redact(e)}')

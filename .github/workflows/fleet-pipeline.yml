@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '*/10 * * * *'   # every 10 minutes, 24/7 on GitHub's cloud
   workflow_dispatch:          # manual trigger
+    inputs:
+      min_live:
+        description: "Force-mint test: override EON_MIN_LIVE (default 6)"
+        required: false
+        default: ""
   repository_dispatch:        # on-demand mint from twin/phone (type: fleet-mint-now)
     types: [fleet-mint-now]
   push:
@@ -45,6 +50,7 @@ jobs:
       - name: Mint + deploy fresh workers
         env:
           EON_TARGET: "3"
+          EON_MIN_LIVE: ${{ inputs.min_live || '6' }}
         run: |
           python3 scripts/fleet-mint.py 2>&1 | tail -30 || echo "mint exit $?"
 
@@ -68,7 +74,7 @@ jobs:
           # Same egress class as the ubuntu claim lane: free Cloudflare WARP.
           sudo systemctl start warp-svc 2>/dev/null || true
           sudo apt-get update -qq >/dev/null 2>&1 || true
-          sudo apt-get install -y -qq curl gnupg >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq curl gnupg xvfb >/dev/null 2>&1 || true
           curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg 2>/dev/null \
             | sudo gpg --dearmor --yes -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg 2>/dev/null || true
           echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(. /etc/os-release && echo $VERSION_CODENAME) main" \
@@ -81,7 +87,13 @@ jobs:
           sudo warp-cli --accept-tos connect >/dev/null 2>&1 || true
           sleep 6
           curl -s https://www.cloudflare.com/cdn-cgi/trace 2>/dev/null | grep -E '^(ip|warp)=' || true
-          python3 scripts/fleet-claim-session.py 2>&1 | tail -12 || echo "claim exit $?"
+          # Headful Firefox under Xvfb mirrors the box (headless browsers are
+          # what Cloudflare's security check rejects). Falls back to headless.
+          if command -v xvfb-run >/dev/null 2>&1; then
+            CLAIM_HEADLESS=0 xvfb-run -a python3 scripts/fleet-claim-session.py 2>&1 | tail -20 || echo "claim exit $?"
+          else
+            python3 scripts/fleet-claim-session.py 2>&1 | tail -20 || echo "claim exit $?"
+          fi
 
       - name: Run fleet cloud pipeline
         env:

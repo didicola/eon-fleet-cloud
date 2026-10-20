@@ -44,7 +44,16 @@ stopped by Cloudflare's security check — that is why the registry reported
 
 The cloud port (`scripts/fleet-claim-session.py`) opens each fresh claim URL in
 Playwright Firefox with the mother's session cookies, on the same WARP egress
-class the box uses. To enable it:
+class the box uses. Cloudflare requires the claimer to be signed in
+("sign in to Cloudflare or create an account" in the claim docs), so the
+session is the one bootstrap credential — not a runtime dependency on the box:
+the dashboard session times out after **72 hours without activity**, and every
+pipeline run (10 minutes) does an authenticated keepalive visit, so the exported
+session stays warm with ubuntu off. If the session is ever revoked (logout,
+password change, Cloudflare invalidates it), the run logs a warning and one
+fresh export is needed — Cloudflare has no claim API.
+
+To enable it:
 
 1. On the box, export the sessions (JSON credential — never commit it):
    ```bash
@@ -56,6 +65,8 @@ class the box uses. To enable it:
    `EON_CF_SESSION` = contents of `cf_session.json`.
 3. The next run claims each fresh mint and marks `claim_status: claimed` in
    `scripts/cloud_rounds.json`; `fleet-cloud.py` then counts it persistent.
+   Every run also keeps the session alive (dashboard visit), so the box can stay
+   off permanently after the one-time export.
 
 If the export contains no Cloudflare cookies, log in to `dash.cloudflare.com`
 once in that Firefox profile first. The workflow never prints the session,
