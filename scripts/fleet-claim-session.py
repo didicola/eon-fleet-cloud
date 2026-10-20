@@ -316,7 +316,6 @@ def main():
         return 0
 
     results = []
-    authed = False
     try:
         with sync_playwright() as p:
             browser = p.firefox.launch(headless=HEADLESS)
@@ -325,7 +324,7 @@ def main():
                 try:
                     ctx = browser.new_context()
                     ctx.add_cookies(cs)
-                    contexts.append(ctx)
+                    contexts.append((i + 1, ctx))
                 except Exception:
                     print(f'[claim] session {i + 1} rejected by browser (format); skipped')
             if not contexts:
@@ -333,50 +332,52 @@ def main():
                 browser.close()
                 return 0
 
-            # keepalive first: every run touches the session, so the 72h
-            # dashboard idle timeout never fires while the pipeline is alive.
-            ka = keepalive(contexts[0])
-            print(f'[claim] keepalive session 1 -> {ka}')
-            if ka == 'LOGIN-REQUIRED':
-                print('::warning::[claim] EON_CF_SESSION expired (dashboard asks for login) — export a fresh session')
-                for ctx in contexts:
+            # Keepalive every pooled session: touches the dashboard so Cloudflare's
+            # 72h idle timer never fires, and finds which sessions are still
+            # logged in. Claims use only the live ones.
+            usable = []
+            for idx, ctx in contexts:
+                ka = keepalive(ctx)
+                print(f'[claim] keepalive session {idx} -> {ka}')
+                if ka in ('AUTHED', 'UNKNOWN'):
+                    usable.append((idx, ctx))
+            if not usable:
+                print('::warning::[claim] all EON_CF_SESSION sessions expired (dashboard asks for login) — export a fresh session')
+                for _, ctx in contexts:
                     try:
                         ctx.close()
                     except Exception:
                         pass
                 browser.close()
                 return 0
-            authed = ka in ('AUTHED', 'UNKNOWN')
 
-            for idx, (u, aid) in enumerate(urls):
-                ctx = contexts[idx % len(contexts)]
+            for n, (u, aid) in enumerate(urls):
+                idx, ctx = usable[n % len(usable)]
                 try:
                     v, d = claim_one(ctx, u)
                 except Exception as e:
                     v, d = 'ERROR', redact(e)
-                print(f"[claim] {aid[:8] if aid else '?'} [s{idx % len(contexts) + 1}] -> {v}: {d}")
+                print(f"[claim] {aid[:8] if aid else '?'} [s{idx}] -> {v}: {d}")
                 if v == 'AUTH-REQUIRED':
                     print('::warning::[claim] session expired during claim — export a fresh EON_CF_SESSION')
                 results.append((aid, v))
                 mark_claimed(aid, v)
 
             # Persist refreshed cookies for an optional secret write-back.
-            # Only when the session proved usable, so a bad run cannot clobber
-            # a good stored secret. state/ is gitignored.
-            if authed or any(v in ('CLAIMED', 'ALREADY') for _, v in results):
-                try:
-                    dump = {'sessions': [
-                        {'source': f'cloud-{i + 1}', 'cookies': ctx.cookies()}
-                        for i, ctx in enumerate(contexts)
-                    ]}
-                    os.makedirs('state', exist_ok=True)
-                    with open('state/cf_session_refresh.json', 'w') as f:
-                        json.dump(dump, f)
-                    print('[claim] refreshed session state captured (state/cf_session_refresh.json)')
-                except Exception as e:
-                    print(f'[claim] refresh capture failed: {redact(e)}')
+            # Only live sessions, so a stale one cannot clobber a good secret.
+            try:
+                dump = {'sessions': [
+                    {'source': f'cloud-{idx}', 'cookies': ctx.cookies()}
+                    for idx, ctx in usable
+                ]}
+                os.makedirs('state', exist_ok=True)
+                with open('state/cf_session_refresh.json', 'w') as f:
+                    json.dump(dump, f)
+                print('[claim] refreshed session state captured (state/cf_session_refresh.json)')
+            except Exception as e:
+                print(f'[claim] refresh capture failed: {redact(e)}')
 
-            for ctx in contexts:
+            for _, ctx in contexts:
                 try:
                     ctx.close()
                 except Exception:
