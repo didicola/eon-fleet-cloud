@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T09:21:32Z",
+  "updated": "2026-10-20T09:31:31Z",
   "rounds": [
     {
       "aid": "802253dbdf7aa9d4106d14bb7d6d205c",
@@ -11,7 +11,7 @@
       "health": "dead",
       "version": "v6",
       "note": "token expired \u2192 subdomain TLS fail; worker+KV permanent but unreachable",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -25,7 +25,7 @@
       "health": "dead",
       "version": "v2-cloud",
       "note": "claimed account; v2-cloud (no streaming); cannot update (no post-claim token)",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0,
       "persistent": false,
@@ -41,7 +41,7 @@
       "health": "dead",
       "version": "v2-cloud",
       "note": "claimed account; v2-cloud; brain verified VANILLA-ALIVE",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0,
       "persistent": false,
@@ -57,7 +57,7 @@
       "health": "dead",
       "version": "v6",
       "note": "PRIMARY \u2014 v6 (streaming + /v1/models + KV self-heal); opencode cloud provider",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -71,7 +71,7 @@
       "health": "dead",
       "version": "lane",
       "note": "claim timeout; verify fail; token expired",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -85,7 +85,7 @@
       "health": "dead",
       "version": "v6",
       "note": "matrix #2 \u2014 bypass 1-hour life",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -99,7 +99,7 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -113,7 +113,7 @@
       "health": "dead",
       "version": "twins-v1",
       "note": "OPTION B \u2014 0-local service twins (router/anthropic/telegram/iptv)",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -127,7 +127,7 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -141,7 +141,7 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -156,7 +156,7 @@
       "version": "fleet-board-1.0",
       "role": "fleet-directory",
       "note": "Fleet Board \u2014 permanent live dashboard + directory (deploy-before-claim)",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -171,7 +171,7 @@
       "version": "aether-1.0",
       "role": "clean-twin",
       "note": "Aether \u2014 clean controlled twin (neutral identity, token-gated control)",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -185,7 +185,7 @@
       "health": "dead",
       "version": "v6",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -200,7 +200,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.celestial-channel-865.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -215,7 +215,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.orange-walleye.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -230,7 +230,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.friendly-ant.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -245,7 +245,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.quartz-horesradish.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -260,7 +260,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.billowy-widget.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -275,7 +275,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.boulder-havarti.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -290,7 +290,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.impossible-cashew.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -305,7 +305,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.pewter-backpack.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -320,7 +320,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.horn-flute.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -335,7 +335,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.bright-substance-151.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -350,7 +350,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.bloom-guest.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -365,7 +365,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.stitch-session.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -380,7 +380,7 @@
       "version": "v6",
       "ai_proxy": "https://ai-proxy.organized-watercress.workers.dev",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -395,7 +395,7 @@
       "version": "v6",
       "ai_proxy": "00:13:56 FATAL: PUT failed:",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -410,7 +410,7 @@
       "version": "v6",
       "ai_proxy": "00:13:57 FATAL: PUT failed:",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -425,7 +425,7 @@
       "version": "v6",
       "ai_proxy": "00:13:57 FATAL: PUT failed:",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -440,7 +440,7 @@
       "version": "v6",
       "ai_proxy": "12:45:33 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -455,7 +455,7 @@
       "version": "v6",
       "ai_proxy": "12:46:08 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -470,7 +470,7 @@
       "version": "v6",
       "ai_proxy": "12:46:44 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -485,7 +485,7 @@
       "version": "v6",
       "ai_proxy": "12:47:18 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -500,7 +500,7 @@
       "version": "v6",
       "ai_proxy": "12:53:56 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -515,7 +515,7 @@
       "version": "v6",
       "ai_proxy": "12:54:32 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -530,7 +530,7 @@
       "version": "v6",
       "ai_proxy": "12:55:10 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -545,7 +545,7 @@
       "version": "v6",
       "ai_proxy": "12:55:45 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "status": "dead",
       "live_streak": 0
     },
@@ -561,7 +561,7 @@
       "ai_proxy": "13:04:00 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
       "status": "dead",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "live_streak": 0
     },
     {
@@ -576,7 +576,7 @@
       "ai_proxy": "13:04:48 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
       "status": "dead",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "live_streak": 0
     },
     {
@@ -591,7 +591,7 @@
       "ai_proxy": "13:05:26 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
       "status": "dead",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "live_streak": 0
     },
     {
@@ -606,7 +606,7 @@
       "ai_proxy": "13:06:03 FATAL: no ai-proxy worker source",
       "note": "auto-minted by round manager",
       "status": "dead",
-      "last_check": "2026-10-20T09:21:31Z",
+      "last_check": "2026-10-20T09:31:30Z",
       "live_streak": 0
     },
     {
@@ -618,7 +618,7 @@
       "minted": "2026-10-19T23:23:12Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-0eb7babb",
@@ -629,7 +629,7 @@
       "minted": "2026-10-19T23:23:18Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-a177428d",
@@ -640,7 +640,7 @@
       "minted": "2026-10-19T23:23:24Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-54ee1b3d",
@@ -651,7 +651,7 @@
       "minted": "2026-10-20T01:55:31Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-fc39ee99",
@@ -662,7 +662,7 @@
       "minted": "2026-10-20T01:55:37Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-9277b363",
@@ -673,7 +673,7 @@
       "minted": "2026-10-20T01:55:44Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-2edf95ad",
@@ -684,7 +684,7 @@
       "minted": "2026-10-20T07:11:12Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-d2517f74",
@@ -695,7 +695,7 @@
       "minted": "2026-10-20T07:11:18Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-19bd3e3a",
@@ -706,7 +706,7 @@
       "minted": "2026-10-20T07:11:25Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-60c93ed0",
@@ -717,7 +717,7 @@
       "minted": "2026-10-20T07:50:02Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-60a87502",
@@ -728,7 +728,7 @@
       "minted": "2026-10-20T07:50:10Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-b9258910",
@@ -739,7 +739,7 @@
       "minted": "2026-10-20T07:50:19Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-882b73c1",
@@ -750,7 +750,7 @@
       "minted": "2026-10-20T08:08:24Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-589260c9",
@@ -761,7 +761,7 @@
       "minted": "2026-10-20T08:08:30Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-6f6ffa63",
@@ -772,7 +772,7 @@
       "minted": "2026-10-20T08:08:36Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-458ef1ce",
@@ -783,7 +783,7 @@
       "minted": "2026-10-20T08:14:31Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-b5668132",
@@ -794,7 +794,7 @@
       "minted": "2026-10-20T08:14:37Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-8220b798",
@@ -805,7 +805,7 @@
       "minted": "2026-10-20T08:14:43Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-83994057",
@@ -816,7 +816,7 @@
       "minted": "2026-10-20T09:01:11Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-a812030b",
@@ -827,7 +827,7 @@
       "minted": "2026-10-20T09:01:18Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-5afef6bc",
@@ -838,7 +838,7 @@
       "minted": "2026-10-20T09:01:24Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-965106bb",
@@ -849,7 +849,7 @@
       "minted": "2026-10-20T09:11:10Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:31Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-1adede55",
@@ -860,7 +860,7 @@
       "minted": "2026-10-20T09:11:16Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:32Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-3d3aedb5",
@@ -871,7 +871,7 @@
       "minted": "2026-10-20T09:11:22Z",
       "status": "dead",
       "live_streak": 0,
-      "last_check": "2026-10-20T09:21:32Z"
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-9507e585",
@@ -880,9 +880,9 @@
       "aid": "9507e5856da15767ff8e697cd60dbdc0",
       "claim_status": "unclaimed",
       "minted": "2026-10-20T09:21:15Z",
-      "status": "live",
-      "live_streak": 2,
-      "last_check": "2026-10-20T09:21:32Z"
+      "status": "dead",
+      "live_streak": 0,
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-09f2a173",
@@ -891,9 +891,9 @@
       "aid": "09f2a173437843ef2d503ca3717ab7e3",
       "claim_status": "unclaimed",
       "minted": "2026-10-20T09:21:21Z",
-      "status": "live",
-      "live_streak": 2,
-      "last_check": "2026-10-20T09:21:32Z"
+      "status": "dead",
+      "live_streak": 0,
+      "last_check": "2026-10-20T09:31:30Z"
     },
     {
       "name": "ghost-7c7d3764",
@@ -902,9 +902,42 @@
       "aid": "7c7d3764803096a3c7e34c9740f47c0d",
       "claim_status": "unclaimed",
       "minted": "2026-10-20T09:21:29Z",
+      "status": "dead",
+      "live_streak": 0,
+      "last_check": "2026-10-20T09:31:31Z"
+    },
+    {
+      "name": "ghost-2d9ba179",
+      "label": "ghost-2d9ba179",
+      "url": "https://eonbrain.mixed-yoke-2d9.workers.dev",
+      "aid": "2d9ba179fb72301f2eb46eca871923c8",
+      "claim_status": "unclaimed",
+      "minted": "2026-10-20T09:31:15Z",
       "status": "live",
       "live_streak": 2,
-      "last_check": "2026-10-20T09:21:32Z"
+      "last_check": "2026-10-20T09:31:31Z"
+    },
+    {
+      "name": "ghost-6382f00d",
+      "label": "ghost-6382f00d",
+      "url": "https://eonbrain.reliable-celery.workers.dev",
+      "aid": "6382f00d9b4a1fd97dfd13c207f3722f",
+      "claim_status": "unclaimed",
+      "minted": "2026-10-20T09:31:21Z",
+      "status": "live",
+      "live_streak": 2,
+      "last_check": "2026-10-20T09:31:31Z"
+    },
+    {
+      "name": "ghost-adf7ad2c",
+      "label": "ghost-adf7ad2c",
+      "url": "https://eonbrain.mountain-angolatitan.workers.dev",
+      "aid": "adf7ad2c4d593ac99e0b088e68c8fa6f",
+      "claim_status": "unclaimed",
+      "minted": "2026-10-20T09:31:28Z",
+      "status": "live",
+      "live_streak": 2,
+      "last_check": "2026-10-20T09:31:31Z"
     }
   ],
   "live": 3,
