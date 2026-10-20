@@ -55,14 +55,25 @@ jobs:
         run: |
           python3 scripts/fleet-mint.py 2>&1 | tail -30 || echo "mint exit $?"
 
+      - name: Ghost keeper (token lane — durable, no browser)
+        # The durable lane. EON_CF_TOKEN is a scoped API token on the mother
+        # identity: it enumerates every account the user belongs to and
+        # (re)deploys the ghost worker where it is missing or not answering.
+        # This replaces the claim-session lane below, which is measured dead
+        # (dashboard session is TLS-fingerprint bound; Turnstile rejects
+        # WARP/datacenter/WebDriver clients; stored mint tokens all 401).
+        env:
+          EON_CF_TOKEN: ${{ secrets.EON_CF_TOKEN }}
+          EON_KEEPER_OUT: scripts/fleet-keeper.json
+          EON_KEEPER_REG: scripts/cloud_rounds.json
+        run: |
+          python3 scripts/fleet-keeper.py 2>&1 | tail -30 || echo "keeper exit $?"
+
       - name: Claim fresh mints (cloud mother session, WARP egress)
-        # Port of the ubuntu claim step (eon-matrix-renew.sh -> matrix-claim.py):
-        # a logged-in Cloudflare "mother" session claims each fresh temp account.
-        # The session cookies come from the repo secret EON_CF_SESSION, exported
-        # once from the box with scripts/export-cf-session.py. Bare headless
-        # Chromium from GitHub datacenter IPs is what Cloudflare's security check
-        # was blocking (0 persistent); WARP is the same egress class the box uses.
-        # If the secret is absent the step is skipped and the mint stays live.
+        # DEAD LANE (2026-10-20): kept only so an existing EON_CF_SESSION can
+        # still be tried. Skips itself when the secret is absent — which is the
+        # intended state now that the token keeper above owns durability.
+
         env:
           EON_CF_SESSION: ${{ secrets.EON_CF_SESSION }}
         run: |
