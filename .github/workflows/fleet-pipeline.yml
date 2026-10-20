@@ -48,13 +48,40 @@ jobs:
         run: |
           python3 scripts/fleet-mint.py 2>&1 | tail -30 || echo "mint exit $?"
 
-      - name: Claim fresh mints (best-effort, headless)
-        # Same-run claim: temp tokens die in ~1h, so claim minutes after mint.
-        # Any failure leaves lanes unclaimed (status quo); job never fails here.
+      - name: Claim fresh mints (cloud mother session, WARP egress)
+        # Port of the ubuntu claim step (eon-matrix-renew.sh -> matrix-claim.py):
+        # a logged-in Cloudflare "mother" session claims each fresh temp account.
+        # The session cookies come from the repo secret EON_CF_SESSION, exported
+        # once from the box with scripts/export-cf-session.py. Bare headless
+        # Chromium from GitHub datacenter IPs is what Cloudflare's security check
+        # was blocking (0 persistent); WARP is the same egress class the box uses.
+        # If the secret is absent the step is skipped and the mint stays live.
+        env:
+          EON_CF_SESSION: ${{ secrets.EON_CF_SESSION }}
         run: |
+          if [ -z "$EON_CF_SESSION" ]; then
+            echo "[claim] EON_CF_SESSION secret not set — session claim skipped"
+            exit 0
+          fi
           pip install playwright 2>&1 | tail -1 || echo "playwright pip note"
-          python3 -m playwright install chromium --with-deps 2>&1 | tail -2 || echo "chromium note"
-          python3 scripts/fleet-claim.py 2>&1 | tail -15 || echo "claim exit $?"
+          python3 -m playwright install firefox --with-deps 2>&1 | tail -2 || echo "firefox install note"
+          # Same egress class as the ubuntu claim lane: free Cloudflare WARP.
+          sudo systemctl start warp-svc 2>/dev/null || true
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq curl gnupg >/dev/null 2>&1 || true
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg 2>/dev/null \
+            | sudo gpg --dearmor --yes -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg 2>/dev/null || true
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(. /etc/os-release && echo $VERSION_CODENAME) main" \
+            | sudo tee /etc/apt/sources.list.d/cloudflare-client.list >/dev/null 2>&1 || true
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq cloudflare-warp >/dev/null 2>&1 || true
+          sudo systemctl start warp-svc 2>/dev/null || sudo service warp-svc start 2>/dev/null || true
+          sudo warp-cli --accept-tos registration new >/dev/null 2>&1 || true
+          sudo warp-cli --accept-tos mode warp >/dev/null 2>&1 || true
+          sudo warp-cli --accept-tos connect >/dev/null 2>&1 || true
+          sleep 6
+          curl -s https://www.cloudflare.com/cdn-cgi/trace 2>/dev/null | grep -E '^(ip|warp)=' || true
+          python3 scripts/fleet-claim-session.py 2>&1 | tail -12 || echo "claim exit $?"
 
       - name: Run fleet cloud pipeline
         env:

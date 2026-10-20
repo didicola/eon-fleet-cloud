@@ -33,6 +33,33 @@ This pipeline keeps them discoverable and healthy without needing the laptop.
 | `EON_TG_CHANNEL` | `@eon_fleet` |
 | `EON_CF_TOKEN` | Cloudflare account token (for minting) |
 | `EON_CF_ACCOUNT` | Cloudflare account ID |
+| `EON_CF_SESSION` | JSON session pool exported from the box's Firefox mother profiles (`scripts/export-cf-session.py`); enables the cloud claim |
+
+## Claim lane (cloud, no local box)
+The ubuntu lane's claim step is `eon-matrix-renew.sh` → rotates logged-in Firefox
+"mother" profiles (`~/.config/eon/mothers/*`) → `matrix-claim.py` over Marionette →
+clicks **Claim** in the Cloudflare dashboard. GitHub's bare headless Chromium is
+stopped by Cloudflare's security check — that is why the registry reported
+`0 persistent`.
+
+The cloud port (`scripts/fleet-claim-session.py`) opens each fresh claim URL in
+Playwright Firefox with the mother's session cookies, on the same WARP egress
+class the box uses. To enable it:
+
+1. On the box, export the sessions (JSON credential — never commit it):
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/didicola/eon-fleet-cloud/main/scripts/export-cf-session.py \
+     | python3 > ~/cf_session.json
+   chmod 600 ~/cf_session.json
+   ```
+2. Repo → Settings → Secrets and variables → Actions → New repository secret
+   `EON_CF_SESSION` = contents of `cf_session.json`.
+3. The next run claims each fresh mint and marks `claim_status: claimed` in
+   `scripts/cloud_rounds.json`; `fleet-cloud.py` then counts it persistent.
+
+If the export contains no Cloudflare cookies, log in to `dash.cloudflare.com`
+once in that Firefox profile first. The workflow never prints the session,
+claim tokens, or account emails.
 
 ## Manual run
 Trigger the workflow from the Actions tab, or:
