@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-21T10:01:13Z",
+  "ts": "2026-10-21T10:10:56Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -167,24 +167,18 @@
     {
       "id": "4737464f46a66e6ff90e3149cf91e2c6",
       "name": "Dark Lentil",
-      "subdomain": "dark-lentil",
-      "lane": "https://eonbrain.dark-lentil.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "2374e6412e80edc68a8362de008f0d8a",
       "name": "Dashing Blarney",
-      "subdomain": "dashing-blarney-237",
-      "lane": "https://eonbrain.dashing-blarney-237.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     }
   ],
   "total": 20,
-  "live": 20,
+  "live": 18,
   "healed": 0,
-  "dead": 0
+  "dead": 2
 }
