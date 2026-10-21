@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-21T15:30:57Z",
+  "ts": "2026-10-21T15:36:33Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -160,10 +160,9 @@
       "name": "Cultured Shade",
       "subdomain": "cultured-shade",
       "lane": "https://eonbrain.cultured-shade.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "4737464f46a66e6ff90e3149cf91e2c6",
@@ -179,14 +178,13 @@
       "name": "Dashing Blarney",
       "subdomain": "dashing-blarney-237",
       "lane": "https://eonbrain.dashing-blarney-237.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     }
   ],
   "total": 20,
-  "live": 18,
-  "healed": 2,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
