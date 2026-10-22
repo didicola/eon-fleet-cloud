@@ -1,96 +1,66 @@
 {
-  "ts": "2026-10-22T13:11:10Z",
+  "ts": "2026-10-22T13:20:48Z",
   "worker": "eonbrain",
   "accounts": [
     {
       "id": "f04cf24f3146158224edc239cce75bd1",
       "name": "Assorted Columnist",
-      "subdomain": "assorted-columnist",
-      "lane": "https://eonbrain.assorted-columnist.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "8a5aeaa79b47be9692e813062ed7ef0c",
       "name": "Autumn Action",
-      "subdomain": "autumn-action",
-      "lane": "https://eonbrain.autumn-action.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "cfccf31090d839e00ae81c892dddd153",
       "name": "Best Guide",
-      "subdomain": "best-guide",
-      "lane": "https://eonbrain.best-guide.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "b393c864d826b59f2da257efea416a31",
       "name": "Best Shade",
-      "subdomain": "best-shade",
-      "lane": "https://eonbrain.best-shade.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "a57169c35f0e240daee591c3bd2d1efd",
       "name": "Blushing Screwdriver",
-      "subdomain": "blushing-screwdriver",
-      "lane": "https://eonbrain.blushing-screwdriver.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "f3f5efc024754125bc31e403b6e705ac",
       "name": "Boiling Bison",
-      "subdomain": "boiling-bison",
-      "lane": "https://eonbrain.boiling-bison.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "11d4971104bfeefe602b6ffa7dbd5508",
       "name": "Bow Tellurium",
-      "subdomain": "bow-tellurium",
-      "lane": "https://eonbrain.bow-tellurium.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "bd326b91a55b85b8c96a0e3bd48ff6cb",
       "name": "Bramble Daffodil",
-      "subdomain": "bramble-daffodil",
-      "lane": "https://eonbrain.bramble-daffodil.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "b0a17bfba82111c504da44770e8f57d6",
       "name": "Bygone Channel",
-      "subdomain": "bygone-channel",
-      "lane": "https://eonbrain.bygone-channel.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "95ffc2f29527fc9981e978ffb35bbdeb",
       "name": "Carpal Locust",
-      "subdomain": "carpal-locust-95f",
-      "lane": "https://eonbrain.carpal-locust-95f.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "6e52bae0bfbcb1663405ca55227bc413",
@@ -184,7 +154,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
+  "live": 10,
   "healed": 0,
-  "dead": 0
+  "dead": 10
 }
