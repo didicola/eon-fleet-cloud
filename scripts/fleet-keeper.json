@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-26T18:20:51Z",
+  "ts": "2026-10-26T18:31:08Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -106,10 +106,9 @@
       "name": "Childlike Glade",
       "subdomain": "childlike-glade",
       "lane": "https://eonbrain.childlike-glade.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "3f67c0f504835155c21ffb0ee6d5dfff",
@@ -185,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 19,
-  "healed": 1,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
