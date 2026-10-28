@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T06:20:51Z",
+  "ts": "2026-10-28T06:30:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -142,10 +142,9 @@
       "name": "Congruous Hardware",
       "subdomain": "congruous-hardware",
       "lane": "https://eonbrain.congruous-hardware.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "f626f4b2a8393e7ea2c10362f88bb044",
@@ -185,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 19,
-  "healed": 1,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
