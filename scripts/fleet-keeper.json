@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T08:40:54Z",
+  "ts": "2026-10-28T08:50:53Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -79,9 +79,10 @@
       "name": "Bygone Channel",
       "subdomain": "bygone-channel",
       "lane": "https://eonbrain.bygone-channel.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "95ffc2f29527fc9981e978ffb35bbdeb",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
