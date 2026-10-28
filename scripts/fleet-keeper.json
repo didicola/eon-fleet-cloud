@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T11:20:55Z",
+  "ts": "2026-10-28T11:30:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -115,9 +115,10 @@
       "name": "Chlorinated Keeper",
       "subdomain": "chlorinated-keeper",
       "lane": "https://eonbrain.chlorinated-keeper.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "cf41414e07d40d1c45d421987d8f1782",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
