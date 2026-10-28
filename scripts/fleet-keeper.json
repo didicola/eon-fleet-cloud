@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T05:30:52Z",
+  "ts": "2026-10-28T05:40:51Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -124,9 +124,10 @@
       "name": "Clear Feeling",
       "subdomain": "clear-feeling",
       "lane": "https://eonbrain.clear-feeling.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "eb2dcba9b116b5f1f28a7e12d26ab384",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
