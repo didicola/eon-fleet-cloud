@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T09:10:57Z",
+  "ts": "2026-10-28T09:20:52Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -133,9 +133,10 @@
       "name": "Clover Click",
       "subdomain": "clover-click-eb2",
       "lane": "https://eonbrain.clover-click-eb2.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "b5fab81291cc7eae94b6f36f14a89bb3",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
