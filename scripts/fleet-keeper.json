@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T13:40:57Z",
+  "ts": "2026-10-28T13:50:57Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -160,10 +160,9 @@
       "name": "Cultured Shade",
       "subdomain": "cultured-shade",
       "lane": "https://eonbrain.cultured-shade.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "4737464f46a66e6ff90e3149cf91e2c6",
@@ -185,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 19,
-  "healed": 1,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
