@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-28T12:11:02Z",
+  "ts": "2026-10-28T12:20:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -70,9 +70,10 @@
       "name": "Bramble Daffodil",
       "subdomain": "bramble-daffodil",
       "lane": "https://eonbrain.bramble-daffodil.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "b0a17bfba82111c504da44770e8f57d6",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
