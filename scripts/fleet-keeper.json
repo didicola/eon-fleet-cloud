@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-04T17:20:59Z",
+  "ts": "2026-11-04T17:30:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -88,9 +88,10 @@
       "name": "Carpal Locust",
       "subdomain": "carpal-locust-95f",
       "lane": "https://eonbrain.carpal-locust-95f.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "6e52bae0bfbcb1663405ca55227bc413",
@@ -115,9 +116,10 @@
       "name": "Chlorinated Keeper",
       "subdomain": "chlorinated-keeper",
       "lane": "https://eonbrain.chlorinated-keeper.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "cf41414e07d40d1c45d421987d8f1782",
@@ -184,7 +186,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 18,
+  "healed": 2,
   "dead": 0
 }
