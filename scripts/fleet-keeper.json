@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-06T09:10:54Z",
+  "ts": "2026-11-06T09:20:57Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -95,96 +95,66 @@
     {
       "id": "6e52bae0bfbcb1663405ca55227bc413",
       "name": "Chartreuse Grip",
-      "subdomain": "chartreuse-grip",
-      "lane": "https://eonbrain.chartreuse-grip.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "6778045221c707fb2f32a382b55bf9ee",
       "name": "Childlike Glade",
-      "subdomain": "childlike-glade",
-      "lane": "https://eonbrain.childlike-glade.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "3f67c0f504835155c21ffb0ee6d5dfff",
       "name": "Chlorinated Keeper",
-      "subdomain": "chlorinated-keeper",
-      "lane": "https://eonbrain.chlorinated-keeper.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "cf41414e07d40d1c45d421987d8f1782",
       "name": "Clear Feeling",
-      "subdomain": "clear-feeling",
-      "lane": "https://eonbrain.clear-feeling.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "eb2dcba9b116b5f1f28a7e12d26ab384",
       "name": "Clover Click",
-      "subdomain": "clover-click-eb2",
-      "lane": "https://eonbrain.clover-click-eb2.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "b5fab81291cc7eae94b6f36f14a89bb3",
       "name": "Congruous Hardware",
-      "subdomain": "congruous-hardware",
-      "lane": "https://eonbrain.congruous-hardware.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "f626f4b2a8393e7ea2c10362f88bb044",
       "name": "Copy Rooster",
-      "subdomain": "copy-rooster",
-      "lane": "https://eonbrain.copy-rooster.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "d8a1726ab2b0717593c66f281a5466fb",
       "name": "Cultured Shade",
-      "subdomain": "cultured-shade",
-      "lane": "https://eonbrain.cultured-shade.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "4737464f46a66e6ff90e3149cf91e2c6",
       "name": "Dark Lentil",
-      "subdomain": "dark-lentil",
-      "lane": "https://eonbrain.dark-lentil.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     },
     {
       "id": "2374e6412e80edc68a8362de008f0d8a",
       "name": "Dashing Blarney",
-      "subdomain": "dashing-blarney-237",
-      "lane": "https://eonbrain.dashing-blarney-237.workers.dev",
-      "state": "live",
-      "http": 200,
-      "deployed": false
+      "subdomain": "",
+      "state": "no-subdomain"
     }
   ],
   "total": 20,
-  "live": 20,
+  "live": 10,
   "healed": 0,
-  "dead": 0
+  "dead": 10
 }
