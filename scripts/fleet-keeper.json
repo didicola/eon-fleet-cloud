@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-12T17:30:57Z",
+  "ts": "2026-11-12T17:40:58Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -178,13 +178,14 @@
       "name": "Dashing Blarney",
       "subdomain": "dashing-blarney-237",
       "lane": "https://eonbrain.dashing-blarney-237.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
