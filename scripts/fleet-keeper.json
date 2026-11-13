@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-13T02:50:55Z",
+  "ts": "2026-11-13T03:01:00Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -61,9 +61,10 @@
       "name": "Bow Tellurium",
       "subdomain": "bow-tellurium",
       "lane": "https://eonbrain.bow-tellurium.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "bd326b91a55b85b8c96a0e3bd48ff6cb",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
