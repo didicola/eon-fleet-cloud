@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-16T17:20:54Z",
+  "ts": "2026-11-16T17:30:55Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -88,10 +88,9 @@
       "name": "Carpal Locust",
       "subdomain": "carpal-locust-95f",
       "lane": "https://eonbrain.carpal-locust-95f.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "6e52bae0bfbcb1663405ca55227bc413",
@@ -134,10 +133,9 @@
       "name": "Clover Click",
       "subdomain": "clover-click-eb2",
       "lane": "https://eonbrain.clover-click-eb2.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "b5fab81291cc7eae94b6f36f14a89bb3",
@@ -186,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 18,
-  "healed": 2,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
