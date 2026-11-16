@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-16T17:41:02Z",
+  "ts": "2026-11-16T17:50:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -61,9 +61,10 @@
       "name": "Bow Tellurium",
       "subdomain": "bow-tellurium",
       "lane": "https://eonbrain.bow-tellurium.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "bd326b91a55b85b8c96a0e3bd48ff6cb",
@@ -97,9 +98,10 @@
       "name": "Chartreuse Grip",
       "subdomain": "chartreuse-grip",
       "lane": "https://eonbrain.chartreuse-grip.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "6778045221c707fb2f32a382b55bf9ee",
@@ -184,7 +186,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 18,
+  "healed": 2,
   "dead": 0
 }
