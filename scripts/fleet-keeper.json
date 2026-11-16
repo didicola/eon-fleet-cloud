@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-16T22:40:54Z",
+  "ts": "2026-11-16T22:50:52Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -7,9 +7,10 @@
       "name": "Assorted Columnist",
       "subdomain": "assorted-columnist",
       "lane": "https://eonbrain.assorted-columnist.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "8a5aeaa79b47be9692e813062ed7ef0c",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
