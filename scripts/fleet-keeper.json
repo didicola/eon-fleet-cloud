@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-16T21:30:55Z",
+  "ts": "2026-11-16T21:40:56Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -88,9 +88,10 @@
       "name": "Carpal Locust",
       "subdomain": "carpal-locust-95f",
       "lane": "https://eonbrain.carpal-locust-95f.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "6e52bae0bfbcb1663405ca55227bc413",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
