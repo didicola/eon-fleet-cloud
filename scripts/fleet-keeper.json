@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-17T20:10:53Z",
+  "ts": "2026-11-17T20:20:59Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -61,10 +61,9 @@
       "name": "Bow Tellurium",
       "subdomain": "bow-tellurium",
       "lane": "https://eonbrain.bow-tellurium.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "bd326b91a55b85b8c96a0e3bd48ff6cb",
@@ -80,10 +79,9 @@
       "name": "Bygone Channel",
       "subdomain": "bygone-channel",
       "lane": "https://eonbrain.bygone-channel.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "95ffc2f29527fc9981e978ffb35bbdeb",
@@ -186,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 18,
-  "healed": 2,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
