@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-18T14:20:56Z",
+  "ts": "2026-11-18T14:30:48Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -79,20 +79,18 @@
       "name": "Bygone Channel",
       "subdomain": "bygone-channel",
       "lane": "https://eonbrain.bygone-channel.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "95ffc2f29527fc9981e978ffb35bbdeb",
       "name": "Carpal Locust",
       "subdomain": "carpal-locust-95f",
       "lane": "https://eonbrain.carpal-locust-95f.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "6e52bae0bfbcb1663405ca55227bc413",
@@ -117,20 +115,18 @@
       "name": "Chlorinated Keeper",
       "subdomain": "chlorinated-keeper",
       "lane": "https://eonbrain.chlorinated-keeper.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "cf41414e07d40d1c45d421987d8f1782",
       "name": "Clear Feeling",
       "subdomain": "clear-feeling",
       "lane": "https://eonbrain.clear-feeling.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "eb2dcba9b116b5f1f28a7e12d26ab384",
@@ -188,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 16,
-  "healed": 4,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
