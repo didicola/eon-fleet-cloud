@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-18T18:01:24Z",
+  "ts": "2026-11-18T18:10:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -25,10 +25,9 @@
       "name": "Best Guide",
       "subdomain": "best-guide",
       "lane": "https://eonbrain.best-guide.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "b393c864d826b59f2da257efea416a31",
@@ -62,10 +61,9 @@
       "name": "Bow Tellurium",
       "subdomain": "bow-tellurium",
       "lane": "https://eonbrain.bow-tellurium.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "bd326b91a55b85b8c96a0e3bd48ff6cb",
@@ -186,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 18,
-  "healed": 2,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
