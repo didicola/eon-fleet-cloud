@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-18T17:20:57Z",
+  "ts": "2026-11-18T17:30:59Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -25,9 +25,10 @@
       "name": "Best Guide",
       "subdomain": "best-guide",
       "lane": "https://eonbrain.best-guide.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "b393c864d826b59f2da257efea416a31",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
