@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-18T16:31:02Z",
+  "ts": "2026-11-18T16:40:52Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -43,10 +43,9 @@
       "name": "Blushing Screwdriver",
       "subdomain": "blushing-screwdriver",
       "lane": "https://eonbrain.blushing-screwdriver.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "f3f5efc024754125bc31e403b6e705ac",
@@ -143,10 +142,9 @@
       "name": "Congruous Hardware",
       "subdomain": "congruous-hardware",
       "lane": "https://eonbrain.congruous-hardware.workers.dev",
-      "state": "healed",
+      "state": "live",
       "http": 200,
-      "deployed": true,
-      "detail": "deployed"
+      "deployed": false
     },
     {
       "id": "f626f4b2a8393e7ea2c10362f88bb044",
@@ -186,7 +184,7 @@
     }
   ],
   "total": 20,
-  "live": 18,
-  "healed": 2,
+  "live": 20,
+  "healed": 0,
   "dead": 0
 }
