@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-23T16:50:58Z",
+  "ts": "2026-11-23T17:00:54Z",
   "worker": "eonbrain",
   "accounts": [
     {
@@ -151,9 +151,10 @@
       "name": "Copy Rooster",
       "subdomain": "copy-rooster",
       "lane": "https://eonbrain.copy-rooster.workers.dev",
-      "state": "live",
+      "state": "healed",
       "http": 200,
-      "deployed": false
+      "deployed": true,
+      "detail": "deployed"
     },
     {
       "id": "d8a1726ab2b0717593c66f281a5466fb",
@@ -184,7 +185,7 @@
     }
   ],
   "total": 20,
-  "live": 20,
-  "healed": 0,
+  "live": 19,
+  "healed": 1,
   "dead": 0
 }
